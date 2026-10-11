@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Фокусы языка · тренажёр схемы 3-4-5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#15171C;--ink2:#555C6B;--ink3:#8A90A0;--line:#E4E6EB;--plate:#F4F5F7;--plate2:#ECEEF2;--white:#fff;--accent:#2347E0;--ok:#17A33B;--okbg:#E7F7EB;--bad:#E5262B;--badbg:#FDECEC;--r:16px;--rs:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--white);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:'cv11','ss01'}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+textarea,input,select{font:inherit;color:inherit}
+.wrap{max-width:1248px;margin:0 auto;padding:0 24px}
+.ico{width:28px;height:28px;flex:none;display:inline-block;vertical-align:middle}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block;flex:none}
+.xicon{display:inline-flex;position:relative}
+.xicon::after{content:'';position:absolute;right:-2px;bottom:-2px;width:10px;height:10px;border-radius:50%;background:var(--c);border:2px solid #fff}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hbar{display:flex;align-items:center;gap:28px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.02em;white-space:nowrap}
+.logo .ico{width:30px;height:30px}
+nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1}
+nav::-webkit-scrollbar{display:none}
+nav button{padding:8px 14px;border-radius:999px;font-weight:500;font-size:15px;color:var(--ink2);white-space:nowrap;transition:.15s}
+nav button:hover{background:var(--plate);color:var(--ink)}
+nav button.on{background:var(--ink);color:#fff}
+.hstat{font-size:13px;color:var(--ink2);white-space:nowrap;display:flex;gap:6px;align-items:center}
+.hstat b{color:var(--ink)}
+
+/* layout */
+main{padding:40px 0 96px}
+.page{display:none;animation:fade .25s ease}
+.page.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ptitle{font-size:40px;line-height:1.1;font-weight:800;letter-spacing:-.03em;margin-bottom:12px}
+.plead{font-size:18px;color:var(--ink2);max-width:720px;margin-bottom:32px}
+.block{margin-bottom:48px}
+.bhead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.btitle{font-size:24px;font-weight:700;letter-spacing:-.02em}
+.bsub{color:var(--ink2);font-size:15px;margin-top:4px}
+.plate{background:var(--plate);border-radius:var(--r);padding:28px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.muted{color:var(--ink2)}
+.small{font-size:14px}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--plate);font-size:13px;font-weight:500;color:var(--ink2);white-space:nowrap}
+.tag .ico{width:18px;height:18px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:12px;font-weight:600;font-size:15px;transition:.15s;white-space:nowrap}
+.btn.pri{background:var(--accent);color:#fff}
+.btn.pri:hover{background:#1A38BD}
+.btn.sec{background:var(--plate);color:var(--ink)}
+.btn.sec:hover{background:var(--plate2)}
+.btn.ghost{border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--plate)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sm{height:36px;padding:0 14px;font-size:14px;border-radius:10px}
+.seg{display:inline-flex;background:var(--plate);border-radius:12px;padding:4px;gap:2px;flex-wrap:wrap}
+.seg button{padding:8px 16px;border-radius:9px;font-weight:500;font-size:14px;color:var(--ink2)}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+kbd{font-family:inherit;font-size:12px;font-weight:600;background:#fff;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px;color:var(--ink2)}
+
+/* 3-4-5 */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tri{background:var(--plate);border-radius:var(--r);padding:24px;display:flex;gap:18px}
+.tri .num{font-size:88px;line-height:.85;font-weight:900;letter-spacing:-.05em}
+.tri h3{font-size:17px;font-weight:700;margin-bottom:10px}
+.tri ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.tri li{display:flex;align-items:center;gap:8px;font-size:15px}
+.tri li .ico{width:24px;height:24px}
+
+/* timeline map */
+.tl{background:var(--plate);border-radius:var(--r);padding:28px 28px 24px}
+.tlgrid{display:grid;grid-template-columns:1fr 1.35fr 1.2fr 1.15fr 1fr;gap:14px;align-items:end}
+.tlcol{display:flex;flex-direction:column;gap:0}
+.pbox{background:#fff;border-radius:12px;border:2px solid var(--c);padding:10px;display:flex;flex-direction:column;gap:4px;min-height:10px}
+.pitem{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;font-weight:600;font-size:14px;text-align:left;transition:.12s;line-height:1.25}
+.pitem:hover{background:var(--plate)}
+.pitem.sel{background:var(--ink);color:#fff}
+.pitem .mi{display:flex;gap:1px}
+.pitem .mi .ico{width:20px;height:20px}
+.pitem.hid .nm{background:var(--plate2);color:transparent;border-radius:6px;min-width:120px;user-select:none}
+.pitem.hid.sel .nm{background:#3a3f4b}
+.stem{width:2px;height:22px;background:var(--c);margin:0 auto}
+.axis{position:relative;height:56px;margin-top:0}
+.axis::before{content:'';position:absolute;left:0;right:22px;top:27px;height:3px;background:var(--ink)}
+.axis::after{content:'';position:absolute;right:0;top:19px;border-left:24px solid var(--ink);border-top:10px solid transparent;border-bottom:10px solid transparent}
+.axis .grid5{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1.35fr 1.2fr 1.15fr 1fr;gap:14px}
+.node{display:flex;justify-content:center;align-items:center}
+.node span{width:28px;height:28px;border-radius:50%;background:var(--c);border:3px solid #fff;box-shadow:0 0 0 2px var(--ink)}
+.node.belief span{width:auto;height:34px;padding:0 16px;border-radius:999px;color:#fff;font-weight:800;font-size:13px;letter-spacing:.06em;display:flex;align-items:center;box-shadow:0 0 0 5px #9a9aa0, 0 0 0 6px #6e6e73}
+.labels{display:grid;grid-template-columns:1fr 1.35fr 1.2fr 1.15fr 1fr;gap:14px;margin-top:10px;text-align:center}
+.labels .an{font-weight:800;font-size:17px}
+.labels .tm{display:inline-block;margin-top:6px;font-size:13px;font-weight:600;color:var(--ink2);background:var(--plate2);padding:3px 12px;border-radius:999px}
+.labels .rs{margin-top:8px;display:flex;flex-direction:column;align-items:center;font-size:12px;font-weight:600;color:var(--ink2)}
+.labels .rs .ico{width:42px;height:38px}
+.detail{margin-top:20px;background:#fff;border-radius:14px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:28px;border:1px solid var(--line)}
+.detail h3{font-size:22px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.detail h3 .ico{width:36px;height:36px}
+.detail .tpl{margin-top:12px;font-size:15px}
+.detail .tpl b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);margin-bottom:4px}
+.ex{background:var(--plate);border-radius:12px;padding:16px 18px}
+.ex .bl{font-size:13px;color:var(--ink3);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.ex .q{font-weight:700;margin-bottom:10px}
+.ex .a{font-size:16px}
+
+/* matrix */
+.mx{display:grid;grid-template-columns:150px repeat(5,1fr);gap:6px}
+.mx .hd{padding:10px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px;border-radius:10px}
+.mx .rh{padding:10px;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;background:var(--plate);border-radius:10px}
+.mx .cl{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;min-height:64px;display:flex;flex-direction:column;gap:4px}
+.mx .ch{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:4px 6px;border-radius:7px;line-height:1.2;text-align:left}
+.mx .ch .ico{width:18px;height:18px}
+.mx .ch.x{font-weight:500;color:var(--ink3);font-style:normal}
+.mx .ch.hid span{background:var(--plate2);color:transparent;border-radius:5px}
+.mx .ch:hover{background:var(--plate)}
+
+/* blitz */
+.qcard{max-width:860px}
+.qtop{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.bar{flex:1;height:8px;background:var(--plate2);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+.qmeta{font-size:14px;color:var(--ink2);font-weight:600;white-space:nowrap}
+.qbox{background:var(--plate);border-radius:var(--r);padding:32px}
+.qkind{font-size:13px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.qtext{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.25;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.qtext .ico{width:44px;height:44px}
+.qvis{margin-top:14px}
+.qvis .big .ico{width:72px;height:72px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:24px}
+.opt{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid transparent;border-radius:12px;padding:14px 16px;text-align:left;font-weight:600;font-size:16px;transition:.12s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.opt:hover{border-color:var(--line)}
+.opt .k{font-size:12px;color:var(--ink3);font-weight:600;border:1px solid var(--line);border-radius:6px;padding:0 6px;margin-left:auto}
+.opt.pick{border-color:var(--accent)}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--bad);background:var(--badbg)}
+.opt.dim{opacity:.5}
+.fb{margin-top:18px;border-radius:12px;padding:14px 18px;font-size:15px;display:none}
+.fb.on{display:block}
+.fb.ok{background:var(--okbg)}
+.fb.bad{background:var(--badbg)}
+.fb b{font-weight:700}
+.qfoot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:12px;flex-wrap:wrap}
+.setup{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:start}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chk{display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:12px 14px;font-size:15px;font-weight:500;cursor:pointer;border:2px solid transparent}
+.chk input{width:18px;height:18px;accent-color:var(--accent)}
+.chk:has(input:checked){border-color:var(--accent)}
+.res{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.res div{background:#fff;border-radius:12px;padding:18px}
+.res b{display:block;font-size:34px;font-weight:800;letter-spacing:-.03em}
+.res span{font-size:14px;color:var(--ink2)}
+.mlist{display:flex;flex-direction:column;gap:8px}
+.mlist div{background:#fff;border-radius:10px;padding:12px 14px;font-size:15px}
+
+/* build */
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:56px;padding:14px;background:#fff;border-radius:14px;border:2px dashed var(--line)}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px 8px 8px;border-radius:10px;background:#fff;border:1.5px solid var(--line);font-weight:600;font-size:14px;transition:.12s;cursor:grab;user-select:none;line-height:1.2;text-align:left}
+.chip .ico{width:22px;height:22px}
+.chip:hover{border-color:#c8ccd5}
+.chip.sel{border-color:var(--accent);box-shadow:0 0 0 3px rgba(35,71,224,.15)}
+.chip.ok{border-color:var(--ok);background:var(--okbg)}
+.chip.bad{border-color:var(--bad);background:var(--badbg)}
+.zones{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:16px}
+.zone{background:#fff;border-radius:14px;border:2px solid var(--line);min-height:220px;padding:10px;display:flex;flex-direction:column;gap:6px;transition:.12s}
+.zone.hot{border-color:var(--accent);background:#F3F6FF}
+.zone .zh{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;padding:4px 4px 8px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.zone .zh small{font-weight:500;color:var(--ink3);margin-left:auto;font-size:12px}
+.zone .chip{width:100%}
+.bmx{display:grid;grid-template-columns:130px repeat(5,1fr);gap:6px;margin-top:16px}
+.bmx .zone{min-height:84px;padding:6px}
+.bmx .zone .chip{font-size:12.5px;padding:6px 8px 6px 6px}
+.bmx .zone .chip .ico{width:18px;height:18px}
+.hint{font-size:14px;color:var(--ink2);display:flex;gap:8px;align-items:center}
+
+/* guess */
+.gcard{background:var(--plate);border-radius:var(--r);padding:32px}
+.gbel{display:inline-flex;align-items:center;gap:10px;background:#D0021B;color:#fff;font-weight:700;font-size:20px;padding:10px 20px;border-radius:999px;letter-spacing:-.01em}
+.grep{margin-top:20px;font-size:24px;font-weight:600;line-height:1.35;letter-spacing:-.01em;padding-left:20px;border-left:4px solid var(--ink)}
+.popts{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:24px}
+.popts .opt{font-size:14.5px;padding:10px 12px}
+.popts .opt .ico{width:24px;height:24px}
+.sopts{margin-top:24px;display:flex;flex-direction:column;gap:14px}
+.sopts .lbl{font-size:13px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
+.sopts .opts{margin-top:8px;grid-template-columns:repeat(5,1fr)}
+.sopts .opts.m4{grid-template-columns:repeat(4,1fr)}
+
+/* spin */
+.spinhead{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end}
+.bsel{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.bsel select,.bsel input{height:44px;border:1px solid var(--line);border-radius:12px;padding:0 14px;background:#fff;font-size:15px;min-width:320px;max-width:100%}
+.bigbel{margin:22px 0 8px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.bigbel .gbel{font-size:24px;padding:12px 24px}
+.agroup{margin-top:28px}
+.agh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.agh .an{font-weight:800;font-size:18px}
+.agh .tag{background:var(--c2)}
+.tasks{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.task{background:var(--plate);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px;border-left:4px solid var(--c)}
+.task .th{display:flex;align-items:center;gap:10px}
+.task .th .ico{width:30px;height:30px}
+.task .th b{font-size:16px}
+.task .th .mi{margin-left:auto;display:flex;gap:2px}
+.task .th .mi .ico{width:20px;height:20px}
+.task .tp{font-size:14px;color:var(--ink2)}
+.task textarea,.one textarea{width:100%;min-height:76px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical;background:#fff;font-size:15px;line-height:1.45}
+.task textarea:focus,.one textarea:focus,.bsel select:focus,.bsel input:focus{outline:2px solid var(--accent);outline-offset:-1px;border-color:transparent}
+.ans{display:none;background:#fff;border-radius:10px;padding:12px 14px;font-size:15px;border:1px dashed #c8ccd5}
+.ans.on{display:block;animation:fade .2s}
+.ans .al{font-size:12px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.ans p+p{margin-top:6px}
+.smx{display:grid;grid-template-columns:130px repeat(5,1fr);gap:6px;margin-top:20px}
+.smx .cl{background:var(--plate);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px}
+.smx .cl .cn{font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;line-height:1.2}
+.smx .cl .cn .ico{width:18px;height:18px}
+.smx textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:13px;resize:vertical;background:#fff}
+.smx .ans{font-size:13px;padding:8px}
+.one{max-width:860px}
+.progress-line{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--ink2);font-weight:600}
+.progress-line .bar{max-width:240px}
+
+/* reference */
+.refgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.refc{background:var(--plate);border-radius:14px;padding:20px}
+.refc h4{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin-bottom:8px}
+.refc h4 .ico{width:32px;height:32px}
+.refc .meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.refc .tpl{font-size:14px;color:var(--ink2);margin-top:8px}
+.refc .exa{margin-top:10px;background:#fff;border-radius:10px;padding:10px 12px;font-size:14px}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.cols4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.cols5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.mini h4{font-size:16px;font-weight:700;margin:8px 0 6px;display:flex;align-items:center;gap:8px}
+.mini p{font-size:14px;color:var(--ink2)}
+.mini .ico{width:40px;height:40px}
+.weak{display:flex;flex-direction:column;gap:8px}
+.wrow{display:grid;grid-template-columns:28px 1fr 160px 48px;align-items:center;gap:12px;background:#fff;border-radius:10px;padding:10px 14px;font-weight:600;font-size:15px}
+.wrow .bar{height:6px}
+.wrow .pct{text-align:right;font-size:14px;color:var(--ink2)}
+.empty{color:var(--ink2);font-size:15px;background:#fff;border-radius:10px;padding:16px}
+footer{border-top:1px solid var(--line);padding:24px 0;color:var(--ink3);font-size:13px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;font-weight:500;opacity:0;transition:.25s;pointer-events:none;z-index:99}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+@media (max-width:1000px){
+  .tlgrid,.labels,.axis .grid5{grid-template-columns:1fr}
+  .axis{display:none}
+  .tlcol{margin-bottom:6px}
+  .labels{display:none}
+  .stem{display:none}
+  .pbox{border-left-width:8px}
+  .pbox::before{content:attr(data-h);font-weight:800;font-size:15px;padding:2px 8px 6px}
+  .trio,.setup,.detail,.tasks,.refgrid,.cols3,.cols4,.cols5{grid-template-columns:1fr}
+  .mx,.smx,.bmx{grid-template-columns:110px repeat(5,minmax(140px,1fr));overflow-x:auto}
+  .zones{grid-template-columns:1fr 1fr}
+  .ptitle{font-size:30px}
+  .hstat{display:none}
+  .sopts .opts,.sopts .opts.m4{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<header><div class="wrap hbar">
+  <div class="logo"><span id="logo-ico"></span>Фокусы языка</div>
+  <nav></nav>
+  <div class="hstat" id="hstat"></div>
+</div></header>
+
+<main><div class="wrap">
+
+<section class="page" id="p-map">
+  <h1 class="ptitle">Схема 3-4-5</h1>
+  <p class="plead">Три вопроса к убеждению, четыре способа мышления, пять областей на линии времени. Каждый паттерн Дилтса занимает в этой схеме своё место.</p>
+  <div class="block"><div class="trio" id="trio"></div></div>
+
+  <div class="block">
+    <div class="bhead"><div><div class="btitle">Паттерны на линии времени</div><div class="bsub">Причины в прошлом, убеждение и контекст в настоящем, цель и эффекты в будущем.</div></div></div>
+    <div class="tl" id="tl"></div>
+  </div>
+
+  <div class="block">
+    <div class="bhead"><div><div class="btitle">Матрица 5×4</div><div class="bsub">Области по горизонтали, способы по вертикали. Серым отмечены ходы, у которых нет названия у Дилтса.</div></div>
+      <div class="seg" id="mxmode"><button class="on" data-v="0">Показать</button><button data-v="1">Скрыть названия</button></div></div>
+    <div class="mx" id="mx"></div>
+    <div id="mxinfo"></div>
+  </div>
+
+  <div class="block">
+    <div class="bhead"><div><div class="btitle">Слабые места</div><div class="bsub">Паттерны с самой низкой точностью по всем тренажёрам.</div></div><button class="btn ghost sm" id="resetstats">Сбросить статистику</button></div>
+    <div class="plate"><div class="weak" id="weak"></div>
+      <div class="row" style="margin-top:18px"><button class="btn pri" data-jump="blitz">Блиц 3-4-5</button><button class="btn sec" data-jump="build">Собери схему</button><button class="btn sec" data-jump="guess">Угадай фокус</button><button class="btn sec" data-jump="spin">Раскрутка</button></div></div>
+  </div>
+</section>
+
+<section class="page" id="p-blitz">
+  <h1 class="ptitle">Блиц 3-4-5</h1>
+  <p class="plead">Короткие вопросы на скорость: где живёт паттерн, каким способом он сделан, что он проверяет. Цель: отвечать быстрее двух секунд.</p>
+  <div id="blitz"></div>
+</section>
+
+<section class="page" id="p-build">
+  <h1 class="ptitle">Собери схему</h1>
+  <p class="plead">Разложи 14 паттернов по местам. Сначала по областям, потом по матрице «область × способ». Засекай время и бей свой рекорд.</p>
+  <div id="build"></div>
+</section>
+
+<section class="page" id="p-guess">
+  <h1 class="ptitle">Угадай фокус</h1>
+  <p class="plead">Перед тобой убеждение и ответ на него. Определи, какой это фокус языка.</p>
+  <div id="guess"></div>
+</section>
+
+<section class="page" id="p-spin">
+  <h1 class="ptitle">Раскрутка убеждения</h1>
+  <p class="plead">Главный тренажёр. Бери убеждение и пиши фокусы сам, по всем паттернам или по всем 20 ячейкам. Потом сверяйся с моими вариантами. Черновики сохраняются в браузере.</p>
+  <div id="spin"></div>
+</section>
+
+<section class="page" id="p-ref">
+  <h1 class="ptitle">Справочник</h1>
+  <p class="plead">Вся схема в одном месте: результаты, способы, области и каждый ход с примером на убеждении «Все люди лгут».</p>
+  <div id="ref"></div>
+</section>
+
+</div></main>
+<footer><div class="wrap">По модели фокусов языка Роберта Дилтса и структурному описанию Александра Любимова (trenings.ru). Прогресс хранится только в этом браузере.</div></footer>
+<div class="toast" id="toast"></div>
+<script>
+const BELIEFS = [
+{b:"Все люди лгут", t:"Люди", a:{
+sr:"Как именно ты понимаешь, что человек сейчас лжёт?",
+c_up:"Так обычно решает каждый подросток после первого предательства лучшего друга.",
+c_down:"Кто конкретно тебя обманул, после чего ты пришёл к такому выводу?",
+c_an:"Меня тоже обманывали. Я вынес из этого умение проверять факты.",
+obj:"Абсолютно все, всегда и обо всём?",
+raz:"Насколько сильно человек должен исказить информацию, чтобы ты решил, что он лжёт?",
+per:"Да, люди постоянно искажают реальность. Каждый видит мир по-своему.",
+ana:"Это как сказать, что все падают. Иногда случается, тоже правда.",
+mm:"Большинство психологов сходятся в том, что люди обычно говорят правду, хотя иногда и привирают.",
+mf:"Какое эмоциональное и несправедливое обобщение!",
+raf:"Люди иногда врут. Только не все, не всегда и не по каждому поводу.",
+pp:"Был ли случай, когда кто-то сказал тебе правду?",
+k_an:"Твоя мама, когда кормила тебя в детстве, тоже лгала?",
+ps:"Тогда и эти твои слова тоже ложь.",
+ik:"Думаю, гораздо важнее найти тех, в ком ты будешь уверен.",
+nam:"Наверное, ты просто хочешь больше доверять окружающим?",
+dr:"Может, лучше научиться определять, когда люди говорят правду?",
+g_meta:"С таким убеждением как раз сложнее всего распознать, кто врёт. Ты подозреваешь всех одинаково.",
+pos:"С таким убеждением ты проживёшь жизнь в одиночестве, ненавидя весь мир.",
+e_down:"Представь: в каждом разговоре ты сидишь напряжённый и ищешь подвох. Даже за ужином с семьёй.",
+e_an:"Как говорится, у подозрительного человека и тень виновата.",
+e_meta:"Такие убеждения обычно заканчиваются тем, что человек сам начинает врать. Все же так делают."}},
+{b:"Деньги портят людей", t:"Деньги", a:{
+sr:"По каким признакам ты определяешь, что человека испортили именно деньги?",
+c_up:"Это любимая мысль из советских фильмов, где все богатые были злодеями.",
+c_down:"Про кого конкретно ты сейчас думаешь? Что с ним случилось?",
+c_an:"Я тоже видел людей, которые изменились после денег. Я понял, что деньги просто делают заметнее то, что в человеке уже было.",
+obj:"Любые деньги? Даже зарплата в двадцать тысяч?",
+raz:"Сколько именно денег нужно, чтобы человек испортился? Миллион? Десять?",
+per:"Деньги дают людям возможности. Кто-то тратит их на благотворительность, кто-то на яхты.",
+ana:"Это как сказать, что ножи делают людей убийцами.",
+mm:"Исследования показывают, что обеспеченные люди в среднем жертвуют на благотворительность больше.",
+mf:"Удобная фраза, когда хочется объяснить, почему у тебя самого денег нет.",
+raf:"Посмотри на всю историю: на деньги строили больницы, университеты и храмы.",
+pp:"Ты знаешь хоть одного обеспеченного человека, который остался порядочным?",
+k_an:"А в голодные годы люди с деньгами тоже портились, когда кормили семьи?",
+ps:"Выходит, получая зарплату, ты сам портишься каждый месяц?",
+ik:"Важнее, каким человеком ты остаёшься при любом доходе.",
+nam:"Тебе, наверное, важно оставаться честным человеком?",
+dr:"Может, полезнее подумать, как сохранить себя, когда денег станет больше?",
+g_meta:"Это убеждение защищает от порчи очень просто: оно не даёт денег вообще.",
+pos:"С таким убеждением ты будешь всю жизнь отказываться от денег, чтобы остаться хорошим.",
+e_down:"Тебе предложат повышение, а ты будешь мяться и чувствовать, что продаёшь душу.",
+e_an:"Посмотри на людей, которые десятилетиями боятся денег. Обычно они и живут в постоянной нехватке.",
+e_meta:"Такая мысль держит человека в бедности надёжнее любой экономики."}},
+{b:"Я слишком стар, чтобы учиться новому", t:"Я сам", a:{
+sr:"Как ты понял, что дошёл до этого возраста? Что изменилось?",
+c_up:"Так говорили наши бабушки, когда на пенсию выходили в пятьдесят пять.",
+c_down:"Что конкретно ты пробовал выучить в последний раз и что получилось?",
+c_an:"Мой отец тоже так думал, пока в шестьдесят не освоил смартфон ради внуков.",
+obj:"То есть ты вообще ничего нового больше не способен запомнить? Даже имя нового соседа?",
+raz:"Сколько лет должно быть человеку, чтобы он перестал учиться? Назови цифру.",
+per:"Ты стал опытным. Опытному человеку учиться легче, есть на что опереться.",
+ana:"Это как сказать, что старое дерево больше не даёт плодов.",
+mm:"Нейробиологи давно показали: мозг способен учиться в любом возрасте.",
+mf:"Удобное оправдание, чтобы не напрягаться.",
+raf:"Если ты проживёшь до девяноста, впереди ещё треть жизни. Что ты будешь делать всё это время?",
+pp:"Ты ведь недавно разобрался с новым телефоном?",
+k_an:"Через десять лет ты будешь вспоминать этот возраст как молодость.",
+ps:"А этому убеждению ты научился в каком возрасте?",
+ik:"Мне кажется, важнее оставаться живым и интересным самому себе.",
+nam:"Наверное, ты просто боишься выглядеть глупо среди молодых?",
+dr:"Может, стоит подумать, чему именно тебе хочется научиться?",
+g_meta:"Это убеждение уберегает от неловкости. И заодно от всего интересного.",
+pos:"Будешь так думать, и мир уйдёт вперёд без тебя.",
+e_down:"Внуки будут показывать тебе что-то на экране, а ты будешь кивать, ничего не понимая.",
+e_an:"Заметь, люди, которые рано записали себя в старики, быстрее всех и стареют.",
+e_meta:"Такие мысли старят быстрее, чем годы."}},
+{b:"Мужчины не плачут", t:"Эмоции", a:{
+sr:"Откуда ты знаешь, что настоящие мужчины не плачут? Ты проверял?",
+c_up:"Это правило из дворов, где за слёзы били.",
+c_down:"Кто тебе первым это сказал? При каких обстоятельствах?",
+c_an:"Мне тоже это говорили в детстве. Я из этого понял только одно: слёзы надо прятать от тех, кто бьёт.",
+obj:"Ни один мужчина за всю историю не плакал?",
+raz:"Сколько слёз допустимо? Одна слеза на похоронах матери уже нарушение?",
+per:"Плакать значит не держать боль внутри. Мужчина может позволить себе быть живым.",
+ana:"Это как сказать, что мужчины не потеют.",
+mm:"Врачи считают, что подавленные эмоции повышают риск инфаркта. Особенно у мужчин.",
+mf:"Это правило придумали, чтобы мальчики меньше доставляли хлопот.",
+raf:"В истории плакали Ахиллес, Наполеон и Черчилль. Ты в хорошей компании.",
+pp:"Футболисты плачут после финала чемпионата мира. Они не мужчины?",
+k_an:"Когда у тебя родится сын, ты запретишь ему плакать, если он разобьёт коленку?",
+ps:"Ты говоришь это с такой болью в голосе. Чем это отличается от слёз?",
+ik:"Важнее быть честным с собой.",
+nam:"Ты хочешь быть сильным для близких?",
+dr:"Может, лучше научиться справляться с эмоциями, чем запрещать их себе?",
+g_meta:"Сила, которая держится на запрете, обычно трескается в самый неподходящий момент.",
+pos:"Если всю жизнь держать всё внутри, однажды это выйдет инфарктом или срывом.",
+e_down:"Ты сидишь на похоронах друга с каменным лицом, в горле ком, и не можешь сказать ни слова.",
+e_an:"Посмотри на мужчин, которые никогда не плакали. Многие из них пьют.",
+e_meta:"Такие запреты делают мужчину слабее, хотя задумывались ради силы."}},
+{b:"Если меня критикуют, значит я плохо работаю", t:"Работа", a:{
+sr:"Как ты отличаешь критику по делу от плохого настроения начальника?",
+c_up:"Так думают бывшие отличники, которых в школе ругали за четвёрки.",
+c_down:"Вспомни конкретный случай. Что именно тебе сказали?",
+c_an:"Меня тоже много критиковали на первой работе. Позже я понял, что критикуют тех, от кого чего-то ждут.",
+obj:"Любая критика от кого угодно? Даже от бабушки на лавочке?",
+raz:"Сколько замечаний за месяц означает «плохо работаю»? Одно? Десять?",
+per:"Критика означает, что твою работу замечают и хотят сделать её лучше.",
+ana:"Это как решить, что раз стоматолог нашёл кариес, ты плохо живёшь.",
+mm:"Лучших спортсменов тренеры критикуют больше всех.",
+mf:"Очень строгий способ к себе относиться.",
+raf:"За год ты сделал сотни задач. Сколько из них критиковали?",
+pp:"Тебя когда-нибудь критиковали за то, что ты сделал хорошо?",
+k_an:"Стива Джобса критиковали всю жизнь. Он плохо работал?",
+ps:"Я сейчас критикую это убеждение. Значит, оно плохо работает?",
+ik:"Важнее, растёшь ли ты как профессионал.",
+nam:"Тебе важно делать работу хорошо?",
+dr:"Может, стоит научиться извлекать из критики пользу?",
+g_meta:"Это убеждение мешает самому качеству: силы уходят на переживания вместо исправлений.",
+pos:"С таким убеждением ты начнёшь бояться показывать работу и перестанешь расти.",
+e_down:"Каждая планёрка будет начинаться с потных ладоней.",
+e_an:"Посмотри на лучших в твоей профессии. Каждого критиковали больше, чем тебя.",
+e_meta:"Такая установка обычно портит работу, потому что страх мешает думать."}},
+{b:"Богатыми становятся только нечестные люди", t:"Деньги", a:{
+sr:"Как ты узнал, как именно разбогател каждый из них?",
+c_up:"Это мнение из девяностых, когда половина капиталов появилась за одну ночь.",
+c_down:"Про каких конкретно богатых ты знаешь, что они нечестные?",
+c_an:"Я тоже встречал жуликов с деньгами. И жуликов без денег встречал не меньше.",
+obj:"Все до одного? Каждый владелец пекарни и автосервиса?",
+raz:"Насколько нечестным нужно быть? Хватит один раз не пробить чек?",
+per:"Богатые люди просто иначе обращаются с риском. Со стороны это бывает похоже на хитрость.",
+ana:"Это как сказать, что худеют только больные.",
+mm:"По данным исследований, большинство миллионеров в мире заработали состояние сами.",
+mf:"Это убеждение хорошо утешает тех, у кого денег мало.",
+raf:"Через пятьдесят лет о многих честных предпринимателях будут писать в учебниках.",
+pp:"Знаешь хотя бы одного обеспеченного человека, который заработал честно?",
+k_an:"Если кто-то из твоей семьи разбогатеет, ты тоже назовёшь его жуликом?",
+ps:"Если ты заработаешь много, придётся признать себя нечестным?",
+ik:"Важнее понять, как зарабатывать, оставаясь честным.",
+nam:"Тебе важна справедливость?",
+dr:"Может, стоит поискать тех, кто разбогател честно, и поучиться у них?",
+g_meta:"Это убеждение отлично охраняет твою честность. Ценой пустого кошелька.",
+pos:"С такой мыслью ты никогда себе не позволишь много зарабатывать.",
+e_down:"Тебе предложат выгодную сделку, и ты откажешься, потому что почувствуешь себя вором.",
+e_an:"Посмотри на тех, кто всю жизнь ругает богатых. Как они живут?",
+e_meta:"Такие убеждения надёжно отрезают человека от денег."}},
+{b:"Без высшего образования хорошую работу не найти", t:"Работа", a:{
+sr:"Как ты проверял, что работодатели смотрят именно на диплом?",
+c_up:"Так говорили родители всех, кто рос в восьмидесятых.",
+c_down:"Тебе где-то конкретно отказали из-за диплома?",
+c_an:"Мне тоже это говорили. Потом я увидел, что на собеседованиях чаще спрашивают про опыт.",
+obj:"Ни одной хорошей работы во всём мире?",
+raz:"Какая работа для тебя хорошая? Сколько она должна приносить?",
+per:"Высшее образование означает умение учиться. Этому можно научиться и без вуза.",
+ana:"Это как сказать, что без музыкальной школы нельзя писать песни.",
+mm:"По опросам, в IT заметная часть разработчиков работает без профильного образования.",
+mf:"Это убеждение из прошлого века.",
+raf:"Пока ты пять лет учишься, кто-то пять лет набирает опыт. Кто окажется впереди?",
+pp:"Знаешь кого-то без диплома, у кого отличная работа?",
+k_an:"А сто лет назад как находили хорошую работу?",
+ps:"Это убеждение ты тоже получил в вузе?",
+ik:"Важнее, что ты умеешь делать руками и головой.",
+nam:"Наверное, ты хочешь стабильности и уверенности в завтрашнем дне?",
+dr:"Может, подумать, какие навыки дают хорошую работу прямо сейчас?",
+g_meta:"Это убеждение даёт хороший повод даже не пробовать.",
+pos:"Будешь так думать, и всю жизнь проработаешь там, куда взяли без вопросов.",
+e_down:"Ты видишь вакансию мечты и даже не открываешь её, потому что всё заранее решил.",
+e_an:"Посмотри на Джобса, Гейтса и Цукерберга. Все трое бросили учёбу.",
+e_meta:"Такие убеждения закрывают больше дверей, чем отсутствие диплома."}},
+{b:"Я не умею выступать на публике", t:"Я сам", a:{
+sr:"По чему ты понимаешь, что выступил плохо?",
+c_up:"Так считает почти каждый, над кем в школе смеялись у доски.",
+c_down:"Когда ты выступал последний раз? Что именно пошло не так?",
+c_an:"Я тоже провалил первое выступление. Вывод у меня получился простой: первое выступление почти всегда проваливается.",
+obj:"Ты вообще не умеешь говорить при людях? Даже тост на дне рождения?",
+raz:"Перед сколькими людьми ты уже не умеешь? Перед тремя умеешь?",
+per:"Ты пока не тренировался. Это навык, такой же, как вождение.",
+ana:"Это как сказать «я не умею плавать», ни разу не зайдя в воду.",
+mm:"Даже опытные ораторы признаются, что волнуются перед каждым выходом.",
+mf:"Ты очень строго себя оцениваешь.",
+raf:"За жизнь ты сотни раз объяснял что-то группе людей. Это тоже выступления.",
+pp:"Ты ведь только что объяснил мне это вполне убедительно.",
+k_an:"А в кругу друзей, когда рассказываешь историю, ты тоже не умеешь?",
+ps:"Ты сейчас очень уверенно выступаешь передо мной с этим тезисом.",
+ik:"Важнее, что тебе есть что сказать.",
+nam:"Ты боишься, что тебя осудят?",
+dr:"Может, стоит сосредоточиться на том, чтобы быть полезным слушателям?",
+g_meta:"Это убеждение защищает от провала. От успеха тоже.",
+pos:"С таким убеждением тебя будут обходить те, кто говорит хуже, зато смелее.",
+e_down:"Твою идею на совещании озвучит коллега, и похвалу получит он.",
+e_an:"Демосфен заикался и тренировался с камешками во рту. Стал лучшим оратором Греции.",
+e_meta:"Чем чаще человек так говорит, тем реже выходит к людям и тем меньше умеет."}},
+{b:"Начальству нельзя возражать", t:"Работа", a:{
+sr:"Как ты узнал, что за возражение будут проблемы? Проверял?",
+c_up:"Это правило из армии и старых заводов.",
+c_down:"Был случай, когда кто-то возразил и пострадал? Что было?",
+c_an:"У меня тоже был строгий шеф. Больше всего он злился, когда узнавал о проблемах последним.",
+obj:"Ни одному начальнику, никогда, ни по какому вопросу?",
+raz:"Возражать нельзя совсем? А задать уточняющий вопрос можно?",
+per:"Возражение это информация для решения. Хороший руководитель за неё платит.",
+ana:"Это как молчать, когда видишь, что самолёт летит в гору.",
+mm:"В авиации есть правило: второй пилот обязан возразить командиру, если видит ошибку. Оно спасло тысячи жизней.",
+mf:"Довольно детская позиция для взрослого специалиста.",
+raf:"Через год никто не вспомнит, что ты возразил. Провальный проект вспомнят все.",
+pp:"Ты знаешь кого-то, кто спорил с руководством и получил повышение?",
+k_an:"А если начальник попросит тебя прыгнуть в окно?",
+ps:"Тогда и твоему начальнику нельзя возражать своему руководству? И так до самого верха?",
+ik:"Важнее, чтобы проект был успешным.",
+nam:"Ты хочешь сохранить работу и хорошие отношения?",
+dr:"Может, подумать, как возражать так, чтобы тебя слышали?",
+g_meta:"Это убеждение бережёт отношения с шефом ровно до первой провальной задачи.",
+pos:"Ты будешь годами исполнять чужие ошибки и отвечать за них.",
+e_down:"Проект провалится, и на разборе тебя спросят: «Почему ты молчал?»",
+e_an:"Как говорится, молчание знак согласия. Выходит, ты соглашаешься с ошибкой.",
+e_meta:"Такие правила превращают специалистов в исполнителей."}},
+{b:"Если хочешь сделать хорошо, сделай сам", t:"Работа", a:{
+sr:"Как ты понял, что другие сделают хуже? Ты давал им попробовать?",
+c_up:"Это фраза из старой французской пьесы. С тех пор управление немного изменилось.",
+c_down:"Кто конкретно тебя подвёл, после чего ты так решил?",
+c_an:"Меня тоже подводили. Я сделал вывод, что надо лучше объяснять задачу.",
+obj:"Всё сам? И зубы себе лечить, и дом строить?",
+raz:"Насколько хорошо должно быть? Каждая задача требует твоего уровня?",
+per:"«Сделай сам» означает «возьми ответственность». Её можно взять и через команду.",
+ana:"Это как дирижёру играть на всех инструментах сразу.",
+mm:"Все крупные компании построены на делегировании. Один человек завод не построит.",
+mf:"Это убеждение для одиночки.",
+raf:"За месяц ты сделаешь сам двадцать задач. Команда сделает двести.",
+pp:"Ты ведь стрижёшься у парикмахера. Сам себя подстрижёшь лучше?",
+k_an:"Хирург тоже должен сам себе делать операции?",
+ps:"А это убеждение ты сам придумал или взял у кого-то готовое?",
+ik:"Важнее сделать так, чтобы хорошо получалось и без тебя.",
+nam:"Тебе важно качество результата?",
+dr:"Может, лучше научиться ставить задачи так, чтобы их делали хорошо?",
+g_meta:"Это убеждение даёт качество ровно в пределах твоих двух рук.",
+pos:"С таким подходом ты будешь работать по четырнадцать часов, пока не сгоришь.",
+e_down:"Ночь, все спят, ты переделываешь отчёт за коллегой, и у тебя дёргается глаз.",
+e_an:"Посмотри на руководителей, которые всё делают сами. Они первыми уходят в выгорание.",
+e_meta:"Так обычно думают те, кто застрял на одном уровне."}},
+{b:"У меня нет времени на спорт", t:"Здоровье", a:{
+sr:"Как ты понял, что времени нет? Ты считал, на что уходит день?",
+c_up:"Это самая популярная фраза у тех, кому просто не хочется заниматься.",
+c_down:"Сколько часов в день ты проводишь в телефоне?",
+c_an:"Я тоже так думал, пока не посчитал время в соцсетях. Вышло полтора часа в день.",
+obj:"Совсем ни минуты за всю неделю?",
+raz:"Сколько времени тебе нужно? Двадцать минут на зарядку у тебя есть?",
+per:"«Нет времени» значит «пока не в приоритете».",
+ana:"Это как сказать, что некогда заправлять машину, потому что надо ехать.",
+mm:"Врачи говорят, что двадцать минут ходьбы в день уже снижают риск болезней сердца.",
+mf:"Самое популярное оправдание в мире.",
+raf:"Если ты проживёшь на десять лет меньше, сколько времени ты сэкономил?",
+pp:"А на сериал вчера вечером время нашлось?",
+k_an:"В отпуске у тебя тоже нет времени двигаться?",
+ps:"А на то, чтобы объяснять, почему нет времени, оно находится?",
+ik:"Важнее здоровье. На нём держится всё остальное время.",
+nam:"Ты хочешь успевать всё и по работе, и для семьи?",
+dr:"Может, подумать, как встроить движение в день, который уже есть?",
+g_meta:"Это убеждение экономит час в неделю и забирает годы.",
+pos:"Будешь так думать, и время найдётся только на врачей.",
+e_down:"Через пять лет ты задыхаешься, поднимаясь на третий этаж.",
+e_an:"Как говорится, кто не находит времени на здоровье, потом находит его на болезни.",
+e_meta:"Такие мысли в итоге стоят дороже абонемента в зал."}},
+{b:"Просить о помощи - признак слабости", t:"Люди", a:{
+sr:"Как ты отличаешь слабого от сильного? По тому, кто просит?",
+c_up:"Так учат в семьях, где за слабость наказывали.",
+c_down:"Когда ты последний раз просил о помощи? Что произошло?",
+c_an:"Мне тоже было неловко просить. Потом я заметил, что люди с удовольствием помогают и после этого становятся ближе.",
+obj:"Любая просьба? Попросить передать соль тоже слабость?",
+raz:"Какая помощь считается слабостью? Спросить дорогу уже стыдно?",
+per:"Просить помощи значит уметь распоряжаться ресурсами. Это навык руководителя.",
+ana:"Это как сказать, что ходить по мосту признак слабости, сильный должен плыть.",
+mm:"Психологи описали эффект Франклина: людям больше нравятся те, кому они помогли.",
+mf:"Очень одинокое правило.",
+raf:"Ни одно большое дело в истории не сделали в одиночку.",
+pp:"Когда друг просил тебя о помощи, ты считал его слабаком?",
+k_an:"Альпинисты идут в связке на одной верёвке. Они слабые?",
+ps:"А когда ты помогаешь другим, ты поддерживаешь их слабость?",
+ik:"Важнее довести дело до результата.",
+nam:"Ты не хочешь быть обузой для других?",
+dr:"Может, полезнее научиться просить так, чтобы людям было приятно помочь?",
+g_meta:"Это убеждение делает тебя сильным только в собственных глазах.",
+pos:"С таким убеждением однажды ты останешься один в очень трудный момент.",
+e_down:"Ты ночью тащишь диван на пятый этаж и срываешь спину, хотя сосед был готов помочь.",
+e_an:"Посмотри на людей, которые никогда ни о чём не просят. Чаще всего они очень одиноки.",
+e_meta:"Такие убеждения обычно и ломают сильных людей."}},
+{b:"Дорого - значит качественно", t:"Деньги", a:{
+sr:"Как ты проверяешь качество? Только по ценнику?",
+c_up:"Это любимая мысль маркетологов люксовых брендов.",
+c_down:"Какая конкретно дорогая вещь тебя ни разу не подвела?",
+c_an:"Я тоже покупал дорогое. Пару раз оказалось, что я заплатил за логотип.",
+obj:"Любая дорогая вещь? Чашка кофе за тысячу рублей вкуснее?",
+raz:"Насколько дороже должно быть? На десять процентов или в два раза?",
+per:"Дорого значит дорого. Цена говорит о спросе и бренде.",
+ana:"Это как считать, что в самом дорогом ресторане всегда вкуснее всего.",
+mm:"В слепых дегустациях даже эксперты часто путают дорогое вино с дешёвым.",
+mf:"Именно на этом убеждении зарабатывают мошенники.",
+raf:"Через пять лет дорогой телефон стоит как дешёвый. Качество тоже упало?",
+pp:"Ты когда-нибудь покупал дорогую вещь, которая быстро сломалась?",
+k_an:"На турецком рынке «дорого» тоже значит качественно?",
+ps:"Если я продам тебе это убеждение подороже, оно станет вернее?",
+ik:"Важнее, насколько вещь подходит под твою задачу.",
+nam:"Ты хочешь не ошибиться с выбором?",
+dr:"Может, стоит научиться разбираться в характеристиках?",
+g_meta:"Это убеждение экономит время на выбор и тратит деньги.",
+pos:"Будешь так думать, и тебя будут обманывать все продавцы.",
+e_down:"Ты отдаёшь три зарплаты за сумку, а через месяц у неё отклеивается ручка.",
+e_an:"Посмотри на тех, кто покупает только дорогое. Сколько денег у них уходит в никуда?",
+e_meta:"Такие правила превращают кошелёк в решето."}},
+{b:"Любые отношения со временем остывают", t:"Отношения", a:{
+sr:"Как ты определяешь, что отношения остыли?",
+c_up:"Так говорят в каждом втором сериале про развод.",
+c_down:"Какие отношения конкретно ты имеешь в виду?",
+c_an:"Я тоже видел, как остывают пары. И видел тех, кто через сорок лет держится за руки.",
+obj:"Абсолютно любые? Отношения матери и ребёнка тоже?",
+raz:"Что именно остывает? Страсть, интерес, нежность? Всё сразу?",
+per:"Остывание значит переход от вспышки к теплу. Как угли после костра.",
+ana:"Это как сказать, что любая еда со временем портится. Вино с годами становится лучше.",
+mm:"Учёные нашли пары, у которых через двадцать лет брака мозг реагирует на партнёра как у влюблённых.",
+mf:"Похоже на прогноз, который сам себя исполняет.",
+raf:"За целую жизнь у отношений бывают и спады, и новые подъёмы.",
+pp:"Ты знаешь хоть одну пару, которая с годами стала ближе?",
+k_an:"Твои бабушка с дедушкой тоже остыли?",
+ps:"А твоя вера в это убеждение со временем тоже остынет?",
+ik:"Важнее, что вы делаете, чтобы поддерживать тепло.",
+nam:"Ты боишься разочарования?",
+dr:"Может, стоит подумать, как сделать отношения интереснее с годами?",
+g_meta:"Это убеждение защищает от боли, заранее отнимая надежду.",
+pos:"С таким убеждением ты сам будешь охлаждать любые отношения.",
+e_down:"Через три года вы сидите вечером в разных комнатах, каждый в своём телефоне.",
+e_an:"Знаешь, у кого отношения остывают быстрее всего? У тех, кто этого ждёт.",
+e_meta:"Такие ожидания обычно и становятся причиной."}},
+{b:"Я ничего не добьюсь, у меня нет связей", t:"Карьера", a:{
+sr:"Как ты узнал, что успех зависит именно от связей?",
+c_up:"Это главная песня всех, кто сидит на диване и ругает систему.",
+c_down:"Где конкретно тебе не хватило связей?",
+c_an:"У меня тоже не было знакомых. Я понял, что связи появляются у тех, кто что-то делает.",
+obj:"Совсем ничего? Даже научиться готовить?",
+raz:"Сколько связей нужно? Одного знакомого хватит?",
+per:"Связи это просто люди, которые тебя знают. Их можно завести.",
+ana:"Это как сказать: у меня нет друзей, поэтому я никогда не найду друзей.",
+mm:"Большинство предпринимателей в первом поколении начинали без нужных знакомств.",
+mf:"Очень удобная причина, чтобы ничего не начинать.",
+raf:"За пять лет активной работы у тебя появится сотня полезных знакомых.",
+pp:"Тот, у кого сейчас много связей, с ними родился?",
+k_an:"А в интернете, где можно написать кому угодно, тоже нужны связи?",
+ps:"Зато с этим убеждением у тебя очень крепкая связь.",
+ik:"Важнее, что ты умеешь и можешь предложить людям.",
+nam:"Ты хочешь, чтобы твои усилия не пропали зря?",
+dr:"Может, подумать, как познакомиться с нужными людьми?",
+g_meta:"Это убеждение избавляет от риска. И от результатов.",
+pos:"С таким убеждением ты так и будешь смотреть, как добиваются другие.",
+e_down:"Через десять лет ты сидишь на той же работе и рассказываешь, что всё решают связи.",
+e_an:"Как говорится, под лежачий камень вода не течёт.",
+e_meta:"Такие мысли мешают сильнее, чем отсутствие знакомых."}},
+{b:"Детей нужно держать в строгости", t:"Семья", a:{
+sr:"Как ты понимаешь, что строгость сработала?",
+c_up:"Так воспитывали в позапрошлом веке, вместе с розгами.",
+c_down:"Тебя самого так воспитывали? Что ты тогда чувствовал?",
+c_an:"Меня тоже держали в строгости. Я из этого вынес только умение хорошо врать родителям.",
+obj:"Всегда и во всём? Даже обнять нельзя?",
+raz:"Насколько строго? Где граница между строгостью и жестокостью?",
+per:"Строгость означает ясные правила. Правила можно объяснять с теплом.",
+ana:"Это как держать цветок в тёмном шкафу, чтобы он рос ровно.",
+mm:"Исследования показывают, что лучшие результаты дают тёплые родители с понятными границами.",
+mf:"Удобно, когда не хочется разбираться в чувствах ребёнка.",
+raf:"Через двадцать лет ребёнок вырастет. Каким он будет приходить к тебе в гости?",
+pp:"Ты знаешь детей, которые выросли в любви и стали хорошими людьми?",
+k_an:"А с тобой на работе тоже нужно обращаться строго, чтобы ты лучше работал?",
+ps:"А к себе ты так же строг, как к ребёнку?",
+ik:"Важнее, чтобы ребёнок вырос счастливым и самостоятельным.",
+nam:"Ты хочешь, чтобы ребёнок вырос дисциплинированным?",
+dr:"Может, подумать, как научить его самого держать себя в руках?",
+g_meta:"Такая цель хороша для солдата. У ребёнка есть цели поважнее.",
+pos:"Ребёнок вырастет и будет звонить тебе раз в год по праздникам.",
+e_down:"Подросток молча закрывает дверь в комнату, и ты ничего не знаешь о его жизни.",
+e_an:"Посмотри на взрослых, которых держали в ежовых рукавицах. Многие до сих пор боятся решать сами.",
+e_meta:"Строгость без тепла обычно растит бунтарей или безвольных."}},
+{b:"Я не могу похудеть, у меня слабая сила воли", t:"Здоровье", a:{
+sr:"Как ты узнал, что дело именно в силе воли?",
+c_up:"Тебе, наверное, с детства все бабушки говорили, что ты слабохарактерный.",
+c_down:"Сколько раз ты пробовал и что именно мешало?",
+c_an:"Я тоже думал, что дело в воле. Оказалось, дело было в плане питания.",
+obj:"У всех полных людей слабая сила воли?",
+raz:"Тебе не хватает силы воли на всё сразу или только вечером у холодильника?",
+per:"Слабая сила воли значит, что у тебя пока нет удобной системы.",
+ana:"Это как сказать, что не можешь выучить язык, потому что у тебя слабая память на слова.",
+mm:"Диетологи считают, что сила воли почти ни при чём. Работают привычки и окружение.",
+mf:"Отличный повод ничего не менять.",
+raf:"Есть места, где худеют люди с любой силой воли: армия, больница, необитаемый остров.",
+pp:"Ты ведь бросал что-то вредное раньше?",
+k_an:"На работе ты тоже ничего не доводишь до конца?",
+ps:"Зато в этом убеждении у тебя очень сильная воля. Ты держишь его годами.",
+ik:"Важнее здоровье. Вес только показатель.",
+nam:"Ты хочешь как-то объяснить себе прошлые неудачи?",
+dr:"Может, стоит сосредоточиться на привычках, которые не требуют воли?",
+g_meta:"Это убеждение хорошо объясняет неудачи. Похудеть оно не помогает.",
+pos:"С таким убеждением сила воли тебе всё равно понадобится. Потом, на таблетки по расписанию и визиты к врачам.",
+e_down:"Ты стоишь в примерочной, и снова ничего не застёгивается.",
+e_an:"Как говорится, глаза боятся, а руки делают.",
+e_meta:"Чем чаще ты это повторяешь, тем слабее себя чувствуешь."}},
+{b:"Ошибаться стыдно", t:"Я сам", a:{
+sr:"Как ты узнаёшь, что тебе должно быть стыдно? Кто это решает?",
+c_up:"Это из школы, где за ошибки ставили двойки и стыдили перед классом.",
+c_down:"Вспомни конкретную ошибку, за которую было стыдно. Что случилось?",
+c_an:"Мне тоже было стыдно за ошибки. Потом я заметил, что сильнее всего учусь именно на них.",
+obj:"Любые ошибки? Опечатка в сообщении тоже позор?",
+raz:"Какая ошибка стыдная? Первая или повторная?",
+per:"Ошибка это результат эксперимента. Стыдно только не делать выводов.",
+ana:"Это как стыдиться падения, когда учишься кататься на велосипеде.",
+mm:"В сильных компаниях ошибки разбирают открыто и без поиска виноватых.",
+mf:"Очень жёсткое отношение к себе.",
+raf:"Через год ты не вспомнишь большинство своих ошибок.",
+pp:"Ты стыдишь малыша, когда он падает, пока учится ходить?",
+k_an:"Учёный в лаборатории тоже стыдится неудачных опытов?",
+ps:"А держаться за ошибочное убеждение стыдно?",
+ik:"Важнее учиться и двигаться дальше.",
+nam:"Ты хочешь, чтобы тебя уважали?",
+dr:"Может, полезнее научиться быстро исправлять ошибки?",
+g_meta:"Это убеждение уберегает от ошибок самым простым способом: ты перестаёшь что-либо делать.",
+pos:"С таким убеждением ты перестанешь пробовать новое.",
+e_down:"Ты знаешь ответ на совещании и молчишь, потому что вдруг ошибёшься.",
+e_an:"Как говорится, не ошибается тот, кто ничего не делает.",
+e_meta:"Стыд за ошибки рождает новые ошибки, потому что их начинают прятать."}},
+{b:"Своё дело - это слишком рискованно", t:"Карьера", a:{
+sr:"Как ты оценил риск? Ты считал цифры?",
+c_up:"Так думает большинство людей, которые никогда не пробовали.",
+c_down:"Кто конкретно у тебя прогорел? Почему?",
+c_an:"Я тоже видел, как закрываются бизнесы. И видел, как сокращают сотрудников в одну пятницу.",
+obj:"Любое своё дело? Даже репетиторство по выходным?",
+raz:"Какой риск для тебя слишком большой? Сколько денег ты готов потерять?",
+per:"Риск значит неопределённость. Её можно уменьшать расчётом.",
+ana:"Это как не выходить из дома, потому что на улице можно споткнуться.",
+mm:"Опытные предприниматели советуют начинать с малого. Так риск становится вполне посильным.",
+mf:"Это убеждение говорит о страхе больше, чем о бизнесе.",
+raf:"За тридцать лет найма риск остаться без работы тоже немаленький.",
+pp:"Ты знаешь кого-то, кто открыл своё дело и справился?",
+k_an:"А работа по найму во время кризиса без риска?",
+ps:"Держаться за это убеждение всю жизнь тоже рискованно.",
+ik:"Важнее понять, чего ты хочешь от жизни.",
+nam:"Ты хочешь сохранить то, что уже есть?",
+dr:"Может, стоит подумать, как начать с минимальным риском?",
+g_meta:"Это убеждение бережёт деньги, которых и так не прибавляется.",
+pos:"Ты так и проработаешь на чужую мечту до пенсии.",
+e_down:"Через двадцать лет ты видишь, как кто-то запустил твою идею, и думаешь: «Я же это придумал».",
+e_an:"Как говорится, кто не рискует, тот не пьёт шампанского.",
+e_meta:"Такие мысли часто и оказываются самым большим риском."}},
+{b:"Я должен всем нравиться", t:"Люди", a:{
+sr:"Как ты понимаешь, что понравился человеку?",
+c_up:"Это правило всех хороших мальчиков и девочек из детского сада.",
+c_down:"Кому конкретно тебе особенно важно было понравиться?",
+c_an:"Я тоже пытался нравиться всем. В итоге перестал нравиться даже себе.",
+obj:"Всем восьми миллиардам людей?",
+raz:"Что значит «нравиться»? Чтобы улыбались? Чтобы любили?",
+per:"Нравиться всем значит быть удобным. Удобных быстро перестают замечать.",
+ana:"Это как стать блюдом, которое любят все. Получится варёная картошка без соли.",
+mm:"Даже у самых любимых людей на планете есть ненавистники.",
+mf:"Невыполнимая задача.",
+raf:"За жизнь ты встретишь тысячи людей. Все они разные.",
+pp:"Ты нравишься друзьям, даже если кому-то на работе нет?",
+k_an:"Ты должен нравиться и тем, кто неприятен тебе?",
+ps:"А тебе самому нравятся все?",
+ik:"Важнее нравиться себе и близким.",
+nam:"Ты хочешь чувствовать себя в безопасности среди людей?",
+dr:"Может, стоит найти своих людей?",
+g_meta:"Цель «нравиться всем» приводит к тому, что настоящего тебя не узнает никто.",
+pos:"С таким убеждением ты потеряешь себя.",
+e_down:"Ты соглашаешься на очередную просьбу и потом сидишь ночью, злой на весь мир.",
+e_an:"Посмотри на угодников. Их любят, пока они полезны.",
+e_meta:"Такие требования к себе обычно заканчиваются выгоранием."}},
+{b:"Сейчас неподходящее время что-то менять", t:"Перемены", a:{
+sr:"Как ты узнаешь, что время стало подходящим?",
+c_up:"Это говорили во все времена. И во все времена время было неподходящее.",
+c_down:"Что конкретно сейчас происходит, что мешает?",
+c_an:"Я тоже ждал подходящего времени. Подходящим оно стало, когда я начал.",
+obj:"Неподходящее для любых изменений? Даже сменить причёску?",
+raz:"Что именно должно случиться, чтобы время стало подходящим?",
+per:"Неподходящее время значит, что ты пока не готов. Это нормально, готовность растёт.",
+ana:"Это как ждать понедельника, чтобы начать новую жизнь.",
+mm:"Многие крупные компании появились во время кризисов.",
+mf:"Классическое откладывание.",
+raf:"Вспомни, что было десять лет назад. Тогда время было подходящим?",
+pp:"Ты ведь в прошлом году что-то менял?",
+k_an:"Через год ты будешь говорить, что вот тогда было подходящее время?",
+ps:"Может, сейчас неподходящее время держаться за это убеждение?",
+ik:"Важнее, сколько времени у тебя впереди.",
+nam:"Ты хочешь подготовиться, чтобы не ошибиться?",
+dr:"Может, стоит сделать первый маленький шаг уже сейчас?",
+g_meta:"Это убеждение даёт ощущение безопасности. И вместе с ним годы ожидания.",
+pos:"Ты прождёшь подходящего времени всю жизнь.",
+e_down:"Тебе шестьдесят, ты листаешь старый блокнот с планами и понимаешь, что так и не начал.",
+e_an:"Как говорится, лучшее время посадить дерево было двадцать лет назад. Следующее лучшее время сегодня.",
+e_meta:"Такие мысли превращают «потом» в «никогда»."}},
+{b:"Деньги даются только тяжёлым трудом", t:"Деньги", a:{
+sr:"Как ты определяешь, что труд был достаточно тяжёлым?",
+c_up:"Это мысль наших родителей, которые выросли на заводах.",
+c_down:"Кто тебе это сказал? Как он сам зарабатывал?",
+c_an:"Мой отец тоже так думал. Он работал больше всех и получал меньше начальника.",
+obj:"Все деньги? Наследство, выигрыш, проценты по вкладу тоже?",
+raz:"Насколько тяжёлым должен быть труд? Шахтёр зарабатывает больше юриста?",
+per:"Тяжёлый труд это усилие. Умное усилие часто приносит больше.",
+ana:"Это как сказать, что вкусное блюдо обязательно долго варится. Хорошая яичница готовится за пять минут.",
+mm:"Экономисты давно показали, что доход сильнее зависит от ценности работы, чем от её тяжести.",
+mf:"Это убеждение очень выгодно работодателям.",
+raf:"Посмотри на последние сто лет: самые тяжёлые профессии почти никогда не были самыми богатыми.",
+pp:"Ты знаешь кого-то, кто хорошо зарабатывает и не надрывается?",
+k_an:"Грузчик работает тяжелее директора. Кто получает больше?",
+ps:"Это убеждение тебе тяжело далось?",
+ik:"Важнее, какую ценность ты создаёшь.",
+nam:"Тебе важно, чтобы деньги были честными?",
+dr:"Может, подумать, как зарабатывать больше, работая умнее?",
+g_meta:"Это убеждение гарантирует тяжёлый труд. Деньги оно не гарантирует.",
+pos:"С таким убеждением ты будешь отказываться от лёгких денег и всю жизнь надрываться.",
+e_down:"К пятидесяти у тебя больная спина и та же зарплата.",
+e_an:"Посмотри на тех, кто больше всех пашет. Они самые богатые?",
+e_meta:"Такие убеждения делают тяжёлым любой заработок."}},
+{b:"Мне уже поздно искать любовь", t:"Отношения", a:{
+sr:"Как ты понял, что поздно? По какому признаку?",
+c_up:"Так говорят женские журналы, которые продают крем от морщин.",
+c_down:"Что конкретно случилось, после чего ты так решил?",
+c_an:"Я тоже думал, что поздно. Потом познакомился с парой, которая поженилась в семьдесят.",
+obj:"Поздно навсегда? До конца жизни?",
+raz:"Сколько лет это «поздно»? Сорок? Пятьдесят? Назови цифру.",
+per:"Поздно для юношеской влюблённости. Для взрослой любви самое время.",
+ana:"Это как сказать, что есть уже поздно, раз обед прошёл. Впереди ещё ужин.",
+mm:"По данным сайтов знакомств, всё больше людей находят партнёров после пятидесяти.",
+mf:"Это убеждение говорит о страхе.",
+raf:"Впереди, может быть, ещё тридцать лет. Это целая жизнь.",
+pp:"Знаешь кого-то, кто встретил любовь в зрелом возрасте?",
+k_an:"Через десять лет ты будешь думать, что сейчас было рано.",
+ps:"А сдаваться не слишком рано?",
+ik:"Важнее быть счастливым в любом возрасте.",
+nam:"Ты хочешь защитить себя от новой боли?",
+dr:"Может, стоит подумать, какой человек тебе нужен сейчас?",
+g_meta:"Это убеждение бережёт от разочарований. И от встреч тоже.",
+pos:"Будешь так думать, и проведёшь оставшиеся годы один.",
+e_down:"Вечер, ужин на одну тарелку, тихо работает телевизор.",
+e_an:"Посмотри на тех, кто решил, что поздно. Им правда стало спокойнее?",
+e_meta:"Такие мысли закрывают дверь, в которую мог кто-то постучать."}},
+{b:"Продажи - это впаривание", t:"Работа", a:{
+sr:"Как ты отличаешь впаривание от помощи с выбором?",
+c_up:"Это мнение из девяностых, когда по квартирам ходили с «чудо-пылесосами».",
+c_down:"Кто конкретно тебе что-то впарил?",
+c_an:"Мне тоже впаривали. Я встречал и продавцов, которые отговорили меня от ненужной покупки.",
+obj:"Любые продажи? Хлеб в булочной тоже впаривают?",
+raz:"Где граница? Рассказать о товаре уже впаривание?",
+per:"Продажа это помощь человеку принять решение.",
+ana:"Это как сказать, что любой врач навязывает лечение.",
+mm:"Исследования показывают, что лучшие продавцы выигрывают за счёт того, что лучше слушают.",
+mf:"Это убеждение мешает зарабатывать.",
+raf:"В масштабе всей экономики продажи двигают всё. Без них в магазинах не было бы ни лекарств, ни техники.",
+pp:"Тебе когда-нибудь помог хороший консультант?",
+k_an:"Когда ты уговариваешь друга посмотреть хороший фильм, ты впариваешь?",
+ps:"Ты сейчас довольно настойчиво продаёшь мне это убеждение.",
+ik:"Важнее польза, которую получает клиент.",
+nam:"Ты хочешь оставаться честным с людьми?",
+dr:"Может, стоит научиться продавать так, чтобы клиент тебя благодарил?",
+g_meta:"Это убеждение бережёт совесть ценой пустой воронки продаж.",
+pos:"С таким убеждением ты не сможешь продать даже то, что сам сделал отлично.",
+e_down:"У тебя отличный продукт, а покупают у конкурента, который просто о нём рассказал.",
+e_an:"Посмотри на мастеров, которые стесняются продавать. Обычно они талантливы и бедны.",
+e_meta:"Такие мысли делают из профессионалов бедных профессионалов."}},
+{b:"Я не творческий человек", t:"Я сам", a:{
+sr:"Как ты определил, что ты нетворческий?",
+c_up:"Это клеймо многим ставят ещё на уроках рисования.",
+c_down:"Когда ты решил, что ты нетворческий? Что тогда случилось?",
+c_an:"Мне тоже говорили, что я плохо рисую. Позже выяснилось, что я хорошо придумываю решения.",
+obj:"Совсем ничего не можешь придумать? Ни одного оправдания за всю жизнь?",
+raz:"В чём именно ты нетворческий? В рисовании? В музыке? В решении задач?",
+per:"Творчество это способ решать задачи по-новому. Ты так делаешь каждый день.",
+ana:"Это как сказать «я неспортивный», ни разу не попробовав спорт.",
+mm:"Исследователи креативности считают, что творческие способности есть у всех.",
+mf:"Очень узкое понимание творчества.",
+raf:"За жизнь ты придумал сотни решений бытовых проблем.",
+pp:"Ты когда-нибудь придумывал подарок, тост или шутку?",
+k_an:"Когда ты готовишь без рецепта, это разве не творчество?",
+ps:"Для нетворческого человека ты довольно изобретательно это убеждение сформулировал.",
+ik:"Важнее, чтобы тебе было интересно.",
+nam:"Ты боишься сравнения с талантливыми?",
+dr:"Может, стоит поискать, в чём проявляется твоё творчество?",
+g_meta:"Это убеждение уберегает от критики. И от удовольствия заодно.",
+pos:"С таким убеждением ты никогда не попробуешь то, что могло тебе понравиться.",
+e_down:"Ты смотришь, как друзья рисуют на мастер-классе, и сидишь в стороне.",
+e_an:"Посмотри на детей. Они все творческие. Взрослые просто разучились.",
+e_meta:"Такие ярлыки работают сильнее любого таланта."}},
+{b:"Если муж задерживается, значит у него кто-то есть", t:"Отношения", a:{
+sr:"Как ты отличаешь задержку из-за работы от измены?",
+c_up:"Это сюжет каждой второй мелодрамы.",
+c_down:"Что конкретно случилось, что ты так решила?",
+c_an:"У моей подруги муж тоже задерживался. Он готовил ей сюрприз к годовщине.",
+obj:"Каждый муж, который хоть раз задержался, изменяет?",
+raz:"На сколько нужно задержаться? Десять минут в пробке уже повод?",
+per:"Задерживается значит занят. Поводов быть занятым у взрослого мужчины много.",
+ana:"Это как считать, что если автобус опоздал, у водителя роман.",
+mm:"Психологи говорят, что ревность разрушает отношения чаще, чем реальные измены.",
+mf:"Это убеждение говорит о тревоге.",
+raf:"За годы брака он задерживался сотни раз. Каждый раз была измена?",
+pp:"Он когда-нибудь задерживался на работе, и это потом подтверждалось?",
+k_an:"Если подруга опоздала на встречу, у неё тоже роман?",
+ps:"А когда ты задерживаешься, у тебя тоже кто-то есть?",
+ik:"Важнее доверие, на котором держится семья.",
+nam:"Ты хочешь быть уверенной в муже?",
+dr:"Может, проще спросить его, что происходит?",
+g_meta:"Это убеждение не помогает узнать правду. Оно только добавляет подозрений.",
+pos:"С таким убеждением ты своей ревностью сама разрушишь брак.",
+e_down:"Каждый вечер ты смотришь на часы, листаешь его телефон и не спишь до его прихода.",
+e_an:"Посмотри на ревнивых жён. Их мужья обычно стараются бывать дома реже.",
+e_meta:"Такие подозрения часто сбываются, потому что от них хочется сбежать."}},
+{b:"Мнение окружающих важнее моего", t:"Люди", a:{
+sr:"Как ты понимаешь, чьё мнение важнее?",
+c_up:"Это из детства, где «что люди скажут» было главным аргументом.",
+c_down:"Чьё конкретно мнение ты так ценишь?",
+c_an:"Я тоже так жил. Потом заметил, что окружающие про меня почти не думают.",
+obj:"Мнение любого прохожего важнее твоего?",
+raz:"Какие именно окружающие? Соседи? Коллеги? Мама?",
+per:"Мнение окружающих это информация. Решение всё равно принимаешь ты.",
+ana:"Это как дать пассажирам рулить твоей машиной.",
+mm:"Психологи считают зависимость от чужого мнения одной из главных причин тревожности.",
+mf:"Очень рискованное правило.",
+raf:"Через десять лет ты не вспомнишь мнение большинства этих людей.",
+pp:"Ты хоть раз сделал по-своему и оказался прав?",
+k_an:"А что тебе есть на ужин, тоже важнее мнение соседей?",
+ps:"Тогда моё мнение об этом убеждении тоже важнее твоего?",
+ik:"Важнее прожить свою жизнь.",
+nam:"Ты хочешь, чтобы тебя принимали?",
+dr:"Может, стоит научиться выслушивать мнения и выбирать самому?",
+g_meta:"Это убеждение даёт одобрение других и забирает собственную жизнь.",
+pos:"Ты проживёшь чужую жизнь по чужим правилам.",
+e_down:"Ты стоишь в загсе с человеком, которого выбрала мама.",
+e_an:"Как говорится, на каждый роток не накинешь платок.",
+e_meta:"Такие правила превращают человека в зеркало для других."}},
+{b:"В нашей нише без демпинга клиентов не получить", t:"Бизнес", a:{
+sr:"Как ты понял, что клиенты уходят именно из-за цены?",
+c_up:"Так думают почти все новички в любой нише.",
+c_down:"Сколько клиентов конкретно отказались из-за цены?",
+c_an:"У нас тоже все демпинговали. Мы подняли цены и получили других клиентов, спокойнее и выгоднее.",
+obj:"Ни одного клиента без скидки? Во всей нише?",
+raz:"Насколько снижать? На пять процентов или в два раза?",
+per:"Демпинг значит соревнование ценой. Соревноваться можно ещё сервисом, скоростью, гарантиями.",
+ana:"Это как сказать, что люди ходят только в те рестораны, где дешевле.",
+mm:"Маркетологи давно говорят, что на цену покупается только часть клиентов. Остальные покупают уверенность.",
+mf:"Это убеждение ведёт к гонке на выживание.",
+raf:"Через три года демпинга у тебя не будет денег ни на рекламу, ни на сотрудников.",
+pp:"У тебя есть клиенты, которые платят полную цену?",
+k_an:"А в соседней нише, где цены выше, клиентов нет?",
+ps:"Ты сам выбираешь врача по самой низкой цене?",
+ik:"Важнее, чтобы бизнес был прибыльным.",
+nam:"Ты хочешь стабильный поток клиентов?",
+dr:"Может, подумать, за что клиенты готовы платить больше?",
+g_meta:"Это убеждение приносит клиентов и уносит прибыль.",
+pos:"С таким подходом ты будешь работать в ноль, пока не закроешься.",
+e_down:"Конец месяца, заказов полно, и при этом на зарплату сотрудникам не хватает.",
+e_an:"Как говорится, скупой платит дважды. Кто пришёл за дешёвым, уйдёт за ещё более дешёвым.",
+e_meta:"Такие стратегии топят бизнес вместе со всей нишей."}},
+{b:"Мне нельзя отдыхать, пока все дела не сделаны", t:"Работа", a:{
+sr:"Как ты понимаешь, что все дела сделаны? Такое вообще бывало?",
+c_up:"Это правило из семей, где отдых считали ленью.",
+c_down:"Кто тебе это внушил? Как он сам жил?",
+c_an:"Я тоже так жил. Однажды понял, что дела не кончаются никогда.",
+obj:"Все дела в мире? До последнего письма?",
+raz:"Какие именно дела должны быть сделаны? Все или главные?",
+per:"Отдых это часть работы. Время на восстановление.",
+ana:"Это как спортсмену запретить себе спать, пока он не выиграет все соревнования.",
+mm:"Исследования продуктивности показывают, что перерывы повышают результат.",
+mf:"Похоже на беговую дорожку без кнопки «стоп».",
+raf:"Если посмотреть на всю жизнь, дела не закончатся никогда. Значит, ты никогда не отдохнёшь?",
+pp:"Ты когда-нибудь отдыхал, не доделав дела, и всё было в порядке?",
+k_an:"В отпуске ты тоже должен сначала всё доделать?",
+ps:"А сам ты когда-нибудь давал отдохнуть этому убеждению?",
+ik:"Важнее сохранить силы на долгую дистанцию.",
+nam:"Ты хочешь чувствовать себя надёжным и ответственным?",
+dr:"Может, подумать, как отдых поможет тебе делать больше?",
+g_meta:"Это убеждение делает тебя продуктивным ровно до первого выгорания.",
+pos:"С таким убеждением ты выгоришь раньше, чем сделаешь половину.",
+e_down:"Воскресенье, солнце, все гуляют, а ты третий час перебираешь почту и ничего не соображаешь.",
+e_an:"Посмотри на трудоголиков, которые не отдыхали. Многих в итоге останавливает больничная койка.",
+e_meta:"Такие правила обычно заканчиваются вынужденным отдыхом."}},
+{b:"Я не могу бросить курить, это сильнее меня", t:"Здоровье", a:{
+sr:"Как ты узнал, что это сильнее тебя? Когда проверял?",
+c_up:"Так говорят производители сигарет. Им это выгодно.",
+c_down:"Сколько раз ты бросал и на какой день срывался?",
+c_an:"Я тоже думал, что не смогу. Оказалось, тяжело было только первые две недели.",
+obj:"Никто в мире не может бросить?",
+raz:"Ты не можешь бросить или пока не нашёл способ?",
+per:"«Сильнее меня» значит «я пока не нашёл, чем это заменить».",
+ana:"Это как сказать: мне не встать с дивана, он меня держит.",
+mm:"По данным ВОЗ, миллионы людей бросают курить каждый год.",
+mf:"Удобная формулировка, когда бросать не хочется.",
+raf:"Первые пятнадцать лет жизни ты не курил. Значит, жить без сигарет ты умеешь.",
+pp:"Ты же не куришь восемь часов в самолёте?",
+k_an:"Когда ты болел ангиной, ты тоже курил?",
+ps:"А это убеждение сильнее тебя? Или его можно бросить?",
+ik:"Важнее увидеть, как вырастут твои дети.",
+nam:"Ты хочешь сохранить способ снимать стресс?",
+dr:"Может, стоит найти другой способ расслабляться?",
+g_meta:"Это убеждение защищает сигарету. Тебя оно не защищает.",
+pos:"С таким убеждением ты будешь курить до первого серьёзного диагноза.",
+e_down:"Утро, кашель, вкус пепла во рту, и пачка снова почти пустая.",
+e_an:"Посмотри на людей после операции на лёгких. Многие тоже думали, что это сильнее их.",
+e_meta:"Пока человек так говорит, сигарета побеждает."}}
+];
+const AREAS = [
+  {id:'c', name:'Причины', time:'Прошлое', res:'truth', color:'#6CC417', soft:'#EEF9E3', ask:'Откуда взялось убеждение: автор, источник, факты, правила вывода.'},
+  {id:'b', name:'Убеждение', time:'Настоящее', res:'truth', color:'#D0021B', soft:'#FCE8EA', ask:'Само утверждение: слова, из которых оно сделано, и его смысл.'},
+  {id:'k', name:'Контекст', time:'Настоящее', res:'truth', color:'#6E6E73', soft:'#EFEFF1', ask:'Где, когда и для кого убеждение работает. Рамка, в которой оно верно.'},
+  {id:'g', name:'Цель', time:'Будущее', res:'use', color:'#E6B800', soft:'#FFF8D6', ask:'Зачем человеку это убеждение и какой результат оно должно дать.'},
+  {id:'e', name:'Эффекты', time:'Будущее', res:'acc', color:'#FF8A1F', soft:'#FFF0E2', ask:'К чему убеждение приводит, если жить по нему годами.'}
+];
+const AREA = Object.fromEntries(AREAS.map(a=>[a.id,a]));
+const METHODS = [
+  {id:'up', name:'Укрупнение', text:'Расширяем и обобщаем: больше людей, больше времени, более общая категория, более важная ценность. Кванторы «все», «всегда», «никогда».'},
+  {id:'down', name:'Разукрупнение', text:'Сужаем и уточняем: конкретный человек, конкретный случай, часть вместо целого, исключение из правила.'},
+  {id:'an', name:'Аналогия', text:'Переходим вбок: похожая ситуация, другой элемент той же группы, метафора, другое слово с близким смыслом.'},
+  {id:'meta', name:'Мета', text:'Смотрим на убеждение сверху: убеждение об убеждении, его структура, как человек его проверяет внутри себя.'}
+];
+const METHOD = Object.fromEntries(METHODS.map(m=>[m.id,m]));
+const RESULTS = {
+  truth:{name:'Истинно?', short:'ложно', text:'Показываем, что убеждение ложное: оно неверно образовано, неверно сформулировано или верно только в узкой рамке.'},
+  use:{name:'Полезно?', short:'неэффективно', text:'Показываем, что убеждение неэффективное: оно плохо служит той цели, ради которой существует.'},
+  acc:{name:'Приемлемо?', short:'неэкологично', text:'Показываем, что убеждение неэкологичное: его последствия обходятся слишком дорого.'}
+};
+// p:1 = паттерн Дилтса, p:0 = структурный ход без отдельного названия
+const K = {
+  sr:{n:'Стратегия реальности', p:1, a:'c', alt:['b'], m:['meta'], d:'Выясняем, как человек узнаёт, что убеждение верно. Какие признаки он замечает, на какие факты опирается, как проверяет внутри себя.', t:'Как именно ты узнаёшь, что…?'},
+  obj:{n:'Объединение', p:1, a:'b', m:['up'], d:'Обобщаем часть убеждения. Добавляем «все», «всегда», «никогда» и доводим мысль до предела, где она перестаёт держаться.', t:'Все? Всегда? Абсолютно любые?'},
+  raz:{n:'Разделение', p:1, a:'b', m:['down'], d:'Дробим элемент убеждения на части и уточняем каждую. Сколько, насколько, что именно.', t:'Насколько именно…? Сколько нужно, чтобы…?'},
+  per:{n:'Переопределение', p:1, a:'b', m:['an'], d:'Заменяем одно слово убеждения близким по смыслу. Оттенок меняется, и вместе с ним меняется оценка.', t:'Х значит Y.'},
+  ana:{n:'Аналогия', p:1, a:'b', m:['an'], d:'Подбираем похожее утверждение. Рядом с ним исходное получает другой смысл или выглядит смешно.', t:'Это как сказать, что…'},
+  mm:{n:'Модель мира', p:1, a:'b', m:['an'], d:'Предлагаем другое убеждение на замену и опираемся на авторитет: большинство, учёных, известного человека.', t:'Большинство считает… / Исследования показывают…'},
+  mf:{n:'Мета-фрейм', p:1, a:'b', m:['meta'], d:'Высказываемся о самом убеждении: даём ему оценку, называем, зачем оно удобно и откуда растёт.', t:'Какое… обобщение! / Удобная мысль, чтобы…'},
+  raf:{n:'Изменение размера фрейма', p:1, a:'k', m:['up','down'], d:'Меняем рамку: срок, число людей, территорию. В большей или меньшей рамке убеждение теряет смысл или становится абсурдным.', t:'Через десять лет… / Если посмотреть на всю жизнь…'},
+  pp:{n:'Противоположный пример', p:1, a:'k', m:['down'], d:'Ищем исключение из правила. Одного живого случая хватает, чтобы правило дало трещину.', t:'Был ли случай, когда…?'},
+  ps:{n:'Применение к себе', p:1, a:'k', m:['meta'], d:'Применяем правило к автору или к самому убеждению. Если правило верно для всех, оно верно и для своих слов.', t:'А к тебе это тоже относится? / Тогда и это утверждение…'},
+  ik:{n:'Иерархия критериев', p:1, a:'g', m:['up'], d:'Предлагаем цель или ценность поважнее той, на которую опирается убеждение.', t:'Важнее…'},
+  nam:{n:'Намерение', p:1, a:'g', m:['down'], d:'Ищем, зачем человеку это убеждение. Какую положительную цель оно обслуживает или какого страха помогает избежать.', t:'Наверное, ты хочешь…?'},
+  dr:{n:'Другой результат', p:1, a:'g', m:['an'], d:'Переводим внимание на соседнюю цель, которая полезнее исходной.', t:'Может, лучше…?'},
+  pos:{n:'Последствия', p:1, a:'e', m:['up','down','an'], d:'Показываем, к чему убеждение приведёт. Можно крупно, можно в конкретной картинке, можно на примере других людей.', t:'С таким убеждением ты…'},
+  c_up:{n:'Укрупнение причин', p:0, a:'c', m:['up'], d:'Обобщаем источник. Кто обычно так думает, в каком возрасте, откуда пошла эта мысль.', t:'Так обычно думают те, кто…'},
+  c_down:{n:'Разукрупнение причин', p:0, a:'c', m:['down'], d:'Уточняем историю убеждения. Кто сказал, что конкретно случилось, сколько было фактов.', t:'Что конкретно случилось? Сколько раз?'},
+  c_an:{n:'Аналогия причин', p:0, a:'c', m:['an'], d:'Берём такие же события и делаем из них другой вывод.', t:'У меня тоже было…, и я понял…'},
+  k_an:{n:'Аналогия контекста', p:0, a:'k', m:['an'], d:'Переносим убеждение в соседнюю ситуацию: на других людей, в другое время, в другое место.', t:'А в … это тоже так?'},
+  g_meta:{n:'Мета цели', p:0, a:'g', m:['meta'], d:'Оцениваем, как убеждение служит своей цели. Что оно даёт и что забирает.', t:'Это убеждение даёт… и забирает…'},
+  e_down:{n:'Разукрупнение эффектов', p:0, a:'e', m:['down'], d:'Рисуем конкретную сцену из будущего: что человек увидит, услышит, почувствует.', t:'Представь: …'},
+  e_an:{n:'Аналогия эффектов', p:0, a:'e', m:['an'], d:'Приводим пример людей с таким же убеждением или пословицу про такие последствия.', t:'Посмотри на тех, кто… / Как говорится…'},
+  e_meta:{n:'Мета эффектов', p:0, a:'e', m:['meta'], d:'Делаем общий вывод о последствиях таких убеждений.', t:'Такие убеждения обычно заканчиваются…'}
+};
+Object.entries(K).forEach(([k,v])=>{v.k=k; v.areas=[v.a].concat(v.alt||[]); v.cells=[]; v.areas.forEach(a=>v.m.forEach(m=>v.cells.push(a+'|'+m)));});
+const PATTERNS = Object.values(K).filter(x=>x.p).map(x=>x.k);
+const ALLKEYS = Object.keys(K);
+const TIMELINE = {c:['sr'], b:['per','raz','obj','ana','mm','mf','sr'], k:['raf','pp','ps'], g:['nam','ik','dr'], e:['pos']};
+const SPIN_ORDER = ['sr','obj','raz','per','ana','mm','mf','raf','pp','ps','ik','nam','dr','pos'];
+const CELL = {}; // 'c|up' -> [keys]
+AREAS.forEach(a=>METHODS.forEach(m=>CELL[a.id+'|'+m.id]=[]));
+ALLKEYS.forEach(k=>K[k].cells.forEach(c=>CELL[c].push(k)));
+// главный ключ ячейки для режима «Матрица»
+const CELL_MAIN = {'c|up':'c_up','c|down':'c_down','c|an':'c_an','c|meta':'sr','b|up':'obj','b|down':'raz','b|an':'per','b|meta':'mf','k|up':'raf','k|down':'pp','k|an':'k_an','k|meta':'ps','g|up':'ik','g|down':'nam','g|an':'dr','g|meta':'g_meta','e|up':'pos','e|down':'e_down','e|an':'e_an','e|meta':'e_meta'};
+const svg = (vb, body, cls='') => `<svg class="ico ${cls}" viewBox="${vb}" aria-hidden="true">${body}</svg>`;
+const ICON_M = {
+  up: svg('0 0 40 40','<circle cx="20" cy="20" r="18" fill="#17A33B"/><circle cx="20" cy="20" r="10.5" fill="none" stroke="#fff" stroke-width="2.4" opacity=".85"/><path d="M12 28 L26 14" stroke="#E5262B" stroke-width="4.2" stroke-linecap="round"/><path d="M19 12 L29 11 L28 21 Z" fill="#E5262B"/>'),
+  down: svg('0 0 40 40','<circle cx="20" cy="20" r="18" fill="#9DEAF3"/><circle cx="22" cy="22" r="8" fill="#35BFD3"/><path d="M6 8 L18 19" stroke="#FF8A1F" stroke-width="5" stroke-linecap="round"/><path d="M12 22 L23 24 L21 13 Z" fill="#FF8A1F"/>'),
+  an: svg('0 0 40 40','<circle cx="11" cy="20" r="9" fill="#A6EC9E"/><circle cx="29" cy="20" r="9" fill="#1EB2F0"/><path d="M4 20 H22" stroke="#B51FE0" stroke-width="4.4" stroke-linecap="round"/><path d="M20 13 L29 20 L20 27 Z" fill="#B51FE0"/>'),
+  meta: svg('0 0 40 40','<circle cx="25" cy="26" r="11" fill="#FF8A1F"/><path d="M8 4 L18 18" stroke="#1F3FD8" stroke-width="4.6" stroke-linecap="round"/><path d="M12 20 L23 24 L21 12 Z" fill="#1F3FD8"/>')
+};
+const ICON_R = {
+  truth: svg('0 0 48 44','<rect x="3" y="18" width="42" height="22" rx="4" fill="#FFE45C" stroke="#E0B800" stroke-width="1.5"/><text x="9" y="36" font-family="Inter,Arial" font-weight="800" font-size="17" fill="#FF8A1F">A</text><text x="28" y="36" font-family="Inter,Arial" font-weight="800" font-size="17" fill="#17A33B">B</text><path d="M20 30 h8" stroke="#555" stroke-width="2" stroke-dasharray="2 2"/><circle cx="24" cy="12" r="10" fill="#E5262B"/><text x="24" y="17" text-anchor="middle" font-family="Inter,Arial" font-weight="800" font-size="14" fill="#fff">?</text>'),
+  use: svg('0 0 48 44','<circle cx="24" cy="23" r="16" fill="#fff" stroke="#1A1A1A" stroke-width="3"/><circle cx="24" cy="23" r="9" fill="none" stroke="#1A1A1A" stroke-width="3"/><circle cx="24" cy="23" r="3" fill="#1A1A1A"/><path d="M8 7 L40 39 M40 7 L8 39" stroke="#E5262B" stroke-width="4.5" stroke-linecap="round"/><path d="M6 14 Q14 4 26 8" stroke="#17A33B" stroke-width="4" fill="none" stroke-linecap="round"/>'),
+  acc: svg('0 0 48 44','<rect x="3" y="18" width="42" height="22" rx="4" fill="#FFE45C" stroke="#E0B800" stroke-width="1.5"/><text x="9" y="36" font-family="Inter,Arial" font-weight="800" font-size="17" fill="#FF8A1F">A</text><text x="28" y="36" font-family="Inter,Arial" font-weight="800" font-size="17" fill="#17A33B">B</text><path d="M18 22 Q26 2 38 6" stroke="#B51FE0" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M33 1 L42 5 L35 12 Z" fill="#B51FE0"/>')
+};
+const ICON_P = {
+  nam: svg('0 0 40 40','<rect x="17" y="14" width="6" height="24" rx="2" fill="#E07000"/><path d="M5 6 H29 L36 12 L29 18 H5 Z" fill="#FF8A00"/>'),
+  per: svg('0 0 40 40','<rect x="5" y="15" width="19" height="19" rx="6" fill="#19B33A"/><rect x="18" y="15" width="19" height="6.5" rx="3.2" fill="#19B33A"/><rect x="9" y="8" width="7" height="12" rx="3.5" fill="#19B33A"/><rect x="20" y="23" width="8" height="5" rx="2.5" fill="#12902D"/><rect x="20" y="29" width="7" height="4.5" rx="2.2" fill="#12902D"/>'),
+  pos: svg('0 0 40 40','<circle cx="20" cy="17" r="13" fill="#E0102A"/><rect x="12.5" y="24" width="15" height="11" rx="3" fill="#E0102A"/><circle cx="15" cy="17" r="3.6" fill="#fff"/><circle cx="25" cy="17" r="3.6" fill="#fff"/><path d="M16 30 v4 M20 30 v4 M24 30 v4" stroke="#fff" stroke-width="1.6"/>'),
+  raz: svg('0 0 40 40','<path d="M3 4 H27 V20 L20 27 H3 Z" fill="#10898E"/><path d="M16 14 L30 28" stroke="#fff" stroke-width="7" stroke-linecap="round"/><path d="M16 14 L30 28" stroke="#10898E" stroke-width="3.2" stroke-linecap="round"/><path d="M24 33 L36 36 L33 24 Z" fill="#10898E" stroke="#fff" stroke-width="1.5"/>'),
+  obj: svg('0 0 40 40','<rect x="13" y="3" width="24" height="24" rx="3" fill="#1E8A2E"/><path d="M6 34 L22 18" stroke="#fff" stroke-width="7.5" stroke-linecap="round"/><path d="M6 34 L22 18" stroke="#1E8A2E" stroke-width="3.5" stroke-linecap="round"/><path d="M14 15 L26 14 L25 26 Z" fill="#fff"/>'),
+  ana: svg('0 0 40 40','<rect x="2" y="10" width="36" height="20" rx="4" fill="#C21FC2"/><path d="M9 20 H25" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M22 13.5 L31 20 L22 26.5 Z" fill="#fff"/>'),
+  raf: svg('0 0 40 40','<rect x="3" y="5" width="34" height="30" rx="5" fill="none" stroke="#9B1C1C" stroke-width="3.5"/><rect x="10" y="11" width="20" height="18" rx="3" fill="none" stroke="#9B1C1C" stroke-width="3.5"/>'),
+  dr: svg('0 0 40 40','<circle cx="12" cy="20" r="10" fill="#1530E0"/><circle cx="28" cy="20" r="10" fill="#1530E0"/><path d="M11 20 H25" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><path d="M22 14 L30 20 L22 26 Z" fill="#fff"/>'),
+  mm: svg('0 0 40 40','<circle cx="20" cy="11" r="7.5" fill="#7A1F8F"/><path d="M6 37 V29 Q6 20 15 20 H25 Q34 20 34 29 V37 Z" fill="#7A1F8F"/><path d="M20 21 L17 26 L20 34 L23 26 Z" fill="#fff"/>'),
+  sr: svg('0 0 40 40','<circle cx="20" cy="20" r="18" fill="#18A84A"/><circle cx="20" cy="11" r="3" fill="#fff"/><rect x="17" y="16" width="6" height="16" rx="2" fill="#fff"/>'),
+  pp: svg('0 0 40 40','<rect x="3" y="5" width="23" height="23" rx="3" fill="#10898E"/><circle cx="32" cy="32" r="5.5" fill="#10898E"/>'),
+  ik: svg('0 0 40 40','<circle cx="22" cy="20" r="15" fill="#D41A1A"/><path d="M6 32 L20 18" stroke="#fff" stroke-width="7.5" stroke-linecap="round"/><path d="M6 32 L20 18" stroke="#D41A1A" stroke-width="3.5" stroke-linecap="round"/><path d="M13 15 L25 13 L23 25 Z" fill="#fff"/>'),
+  ps: svg('0 0 40 40','<path d="M30 26 A12 12 0 1 1 30 14" fill="none" stroke="#FF8A00" stroke-width="6" stroke-linecap="round"/><path d="M24 8 L35 9 L32 19 Z" fill="#FF8A00"/>'),
+  mf: svg('0 0 40 40','<path d="M8 5 Q30 5 26 16 Q22 24 12 22" fill="none" stroke="#1530E0" stroke-width="6" stroke-linecap="round"/><path d="M12 22 Q30 24 28 30" fill="none" stroke="#1530E0" stroke-width="6" stroke-linecap="round"/><path d="M20 28 L30 38 L36 26 Z" fill="#1530E0"/>')
+};
+function iconKey(k){ if(ICON_P[k]) return ICON_P[k]; const x=K[k]; return `<span class="xicon" style="--c:${AREA[x.a].color}">${ICON_M[x.m[0]]}</span>`; }
+function methodIcons(k){ return K[k].m.map(m=>ICON_M[m]).join(''); }
+function areaDot(a){ return `<span class="dot" style="background:${AREA[a].color}"></span>`; }
+/* ---------- utils ---------- */
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rnd = n=>Math.floor(Math.random()*n);
+const pick = a=>a[rnd(a.length)];
+const shuffle = a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const store = {
+  get(k,d){try{const v=localStorage.getItem('fy.'+k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem('fy.'+k,JSON.stringify(v))}catch(e){}}
+};
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('on'),1800)}
+const fmtTime = s=>{s=Math.round(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+
+/* ---------- статистика ---------- */
+const Stats = {
+  d: store.get('stats',{}),
+  rec(k,ok){const x=this.d[k]||[0,0];x[1]++; if(ok)x[0]++; this.d[k]=x; this.today(ok); store.set('stats',this.d); renderHeaderStat();},
+  ratio(k){const x=this.d[k];return x&&x[1]?x[0]/x[1]:null},
+  weight(k){const r=this.ratio(k);return r===null?1.6:1+ (1-r)*3},
+  today(ok){const day=new Date().toISOString().slice(0,10);let t=store.get('today',{day,ok:0,all:0});if(t.day!==day)t={day,ok:0,all:0};t.all++;if(ok)t.ok++;store.set('today',t)},
+  getToday(){const day=new Date().toISOString().slice(0,10);let t=store.get('today',{day,ok:0,all:0});return t.day===day?t:{day,ok:0,all:0}}
+};
+function wpick(keys){const ws=keys.map(k=>Stats.weight(k));let s=ws.reduce((a,b)=>a+b,0)*Math.random();for(let i=0;i<keys.length;i++){s-=ws[i];if(s<=0)return keys[i]}return keys[keys.length-1]}
+function renderHeaderStat(){const t=Stats.getToday();$('#hstat').innerHTML=t.all?`Сегодня: <b>${t.all}</b> ответов, <b>${Math.round(t.ok/t.all*100)}%</b> верно`:'Сегодня ещё нет ответов'}
+
+/* ---------- навигация ---------- */
+const PAGES = [['map','Схема'],['blitz','Блиц 3-4-5'],['build','Собери схему'],['guess','Угадай фокус'],['spin','Раскрутка'],['ref','Справочник']];
+function go(id){
+  $$('.page').forEach(p=>p.classList.toggle('on',p.id==='p-'+id));
+  $$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.go===id));
+  if(location.hash!=='#'+id) history.replaceState(null,'','#'+id);
+  window.scrollTo({top:0});
+  if(id==='map') renderWeak();
+}
+
+/* ---------- общие фрагменты ---------- */
+function exampleFor(k,bi){const b=BELIEFS[bi];return `<div class="ex"><div class="bl">Убеждение</div><div class="q">«${esc(b.b)}»</div><div class="a">- ${esc(b.a[k])}</div></div>`}
+function keyTags(k){
+  const x=K[k];
+  const areas=x.areas.map(a=>`<span class="tag">${areaDot(a)}${AREA[a].name}</span>`).join('');
+  const ms=x.m.map(m=>`<span class="tag">${ICON_M[m]}${METHOD[m].name}</span>`).join('');
+  const rs=[...new Set(x.areas.map(a=>AREA[a].res))].map(r=>`<span class="tag">${ICON_R[r]}${RESULTS[r].name}</span>`).join('');
+  return areas+ms+rs;
+}
+function structLine(k){const x=K[k];return `${x.areas.map(a=>AREA[a].name).join(' или ')} · ${x.m.map(m=>METHOD[m].name).join(' + ')} · ${[...new Set(x.areas.map(a=>RESULTS[AREA[a].res].name))].join(' ')}`}
+
+/* ---------- 1. СХЕМА ---------- */
+const MapS = {sel:'nam', hide:false, opened:new Set(), ex:0, mxHide:false};
+function renderMap(){
+  const wd={c:1,b:1.35,k:1.2,g:1.15,e:1};
+  let cols='';
+  AREAS.forEach(a=>{
+    const items=TIMELINE[a.id].map(k=>{
+      const hid=MapS.hide&&!MapS.opened.has(a.id+k);
+      return `<button class="pitem ${MapS.sel===k?'sel':''} ${hid?'hid':''}" data-k="${k}" data-a="${a.id}"><span class="mi">${methodIcons(k)}</span><span class="nm">${K[k].n}</span></button>`}).join('');
+    cols+=`<div class="tlcol"><div class="pbox" data-h="${a.name} · ${a.time} · ${RESULTS[a.res].name}" style="--c:${a.color}">${items}</div><div class="stem" style="--c:${a.color}"></div></div>`;
+  });
+  const nodes=AREAS.map(a=>a.id==='b'?`<div class="node belief"><span style="background:${a.color}">УБЕЖДЕНИЕ</span></div>`:`<div class="node"><span style="--c:${a.color}"></span></div>`).join('');
+  const labels=AREAS.map(a=>`<div><div class="an">${a.id==='b'?'Убеждение':a.id==='k'?'Контекст':a.name}</div><div class="tm">${a.time}</div><div class="rs">${ICON_R[a.res]}${RESULTS[a.res].name}</div></div>`).join('');
+  const total=AREAS.reduce((s,a)=>s+TIMELINE[a.id].length,0);
+  $('#tl').innerHTML=`
+    <div class="bhead" style="margin-bottom:22px">
+      <div class="seg" id="tlmode"><button class="${!MapS.hide?'on':''}" data-v="0">Показать всё</button><button class="${MapS.hide?'on':''}" data-v="1">Проверь себя</button></div>
+      <div class="hint">${MapS.hide?`Вспомни название по иконкам способа и нажми, чтобы проверить. Открыто ${MapS.opened.size} из ${total}.`:'Нажми на паттерн, чтобы увидеть описание и пример.'}</div>
+    </div>
+    <div class="tlgrid">${cols}</div>
+    <div class="axis"><div class="grid5">${nodes}</div></div>
+    <div class="labels">${labels}</div>
+    <div class="detail" id="detail"></div>`;
+  renderDetail();
+  $$('#tlmode button').forEach(b=>b.onclick=()=>{MapS.hide=b.dataset.v==='1';MapS.opened.clear();if(MapS.hide)MapS.sel=null;renderMap()});
+  $$('#tl .pitem').forEach(b=>b.onclick=()=>{MapS.sel=b.dataset.k;if(MapS.hide)MapS.opened.add(b.dataset.a+b.dataset.k);renderMap()});
+}
+function renderDetail(){
+  const k=MapS.sel,x=K[k];
+  if(!k){$('#detail').innerHTML=`<div class="muted" style="grid-column:1/-1">Назови про себя каждый паттерн, потом нажимай и проверяй. Описание и пример откроются здесь.</div>`;return}
+  $('#detail').innerHTML=`<div><h3>${iconKey(k)}${x.n}</h3><div class="row" style="gap:6px;margin-bottom:12px">${keyTags(k)}</div><p>${x.d}</p><div class="tpl"><b>Как звучит</b>${esc(x.t)}</div></div>
+  <div>${exampleFor(k,MapS.ex)}<div class="row" style="margin-top:12px"><button class="btn sec sm" id="nextex">Другой пример</button><span class="small muted">${MapS.ex+1} из ${BELIEFS.length}</span></div></div>`;
+  $('#nextex').onclick=()=>{MapS.ex=(MapS.ex+1)%BELIEFS.length;renderDetail()};
+}
+function renderMatrix(){
+  let h=`<div></div>`+AREAS.map(a=>`<div class="hd" style="background:${a.soft}">${areaDot(a.id)}${a.name}</div>`).join('');
+  METHODS.forEach(m=>{
+    h+=`<div class="rh">${ICON_M[m.id]}${m.name}</div>`;
+    AREAS.forEach(a=>{
+      const ks=CELL[a.id+'|'+m.id];
+      h+=`<div class="cl">${ks.map(k=>`<button class="ch ${K[k].p?'':'x'} ${MapS.mxHide&&K[k].p?'hid':''}" data-k="${k}">${iconKey(k)}<span>${K[k].n}</span></button>`).join('')}</div>`;
+    });
+  });
+  $('#mx').innerHTML=h;
+  $$('#mx .ch').forEach(b=>b.onclick=()=>{
+    if(b.classList.contains('hid')){b.classList.remove('hid');return}
+    MapS.sel=b.dataset.k; if(!TIMELINE[K[b.dataset.k].a].includes(b.dataset.k)) {showKeyModal(b.dataset.k);return}
+    renderMap(); $('#tl').scrollIntoView({behavior:'smooth'});
+  });
+}
+function showKeyModal(k){MapS.sel=k;const x=K[k];$('#mxinfo').innerHTML=`<div class="detail" style="margin-top:14px"><div><h3>${iconKey(k)}${x.n}</h3><div class="row" style="gap:6px;margin-bottom:12px">${keyTags(k)}</div><p>${x.d}</p><p class="small muted" style="margin-top:8px">Отдельного названия у Дилтса нет. Это ход по структуре: область + способ.</p><div class="tpl"><b>Как звучит</b>${esc(x.t)}</div></div><div>${exampleFor(k,rnd(BELIEFS.length))}</div></div>`}
+function renderWeak(){
+  const rows=PATTERNS.map(k=>({k,r:Stats.ratio(k),n:(Stats.d[k]||[0,0])[1]})).filter(x=>x.r!==null).sort((a,b)=>a.r-b.r).slice(0,6);
+  $('#weak').innerHTML=rows.length?rows.map(x=>`<div class="wrow">${iconKey(x.k)}<span>${K[x.k].n}</span><div class="bar"><i style="width:${Math.round(x.r*100)}%;background:${x.r<.6?'var(--bad)':x.r<.85?'#E6B800':'var(--ok)'}"></i></div><span class="pct">${Math.round(x.r*100)}%</span></div>`).join(''):`<div class="empty">Здесь появятся паттерны, в которых ты ошибаешься чаще всего. Пройди пару раундов блица или угадайки.</div>`;
+}
+/* ---------- 2. БЛИЦ ---------- */
+const QTYPES = [
+  {id:'area', name:'Паттерн → область'},
+  {id:'method', name:'Паттерн → способ'},
+  {id:'result', name:'Паттерн → вопрос (3)'},
+  {id:'time', name:'Паттерн → время'},
+  {id:'cell', name:'Область + способ → паттерн'},
+  {id:'icon', name:'Иконка → название'},
+  {id:'desc', name:'Описание → паттерн'},
+  {id:'reply', name:'Реплика → паттерн'}
+];
+const Blitz = {len:20, types:store.get('btypes',['area','method','result','time','cell','icon','reply']), qs:[], i:0, score:0, t0:0, times:[], mistakes:[], answered:false, picked:new Set(), timer:null};
+function patOpt(k){return {id:k,html:`${iconKey(k)}<span>${K[k].n}</span>`}}
+function distract(correct,pool,n){return shuffle(pool.filter(x=>!correct.includes(x))).slice(0,n)}
+function genQ(type){
+  const k=wpick(PATTERNS), x=K[k];
+  if(type==='area') return {kind:'Область', stat:k, text:`${iconKey(k)} В какой области работает «${x.n}»?`, opts:AREAS.map(a=>({id:a.id,html:`${areaDot(a.id)}<span>${a.name}</span>`})), ok:x.areas, explain:`«${x.n}»: ${structLine(k)}`};
+  if(type==='method') return {kind:'Способ', stat:k, multi:x.m.length>1, text:`${iconKey(k)} Каким способом сделан «${x.n}»?${x.m.length>1?' <span class="tag">здесь несколько</span>':''}`, opts:METHODS.map(m=>({id:m.id,html:`${ICON_M[m.id]}<span>${m.name}</span>`})), ok:x.m, explain:`«${x.n}»: ${x.m.map(m=>METHOD[m].name).join(' + ')}`};
+  if(type==='result'){const rs=[...new Set(x.areas.map(a=>AREA[a].res))];return {kind:'Результат', stat:k, text:`${iconKey(k)} Какой вопрос к убеждению задаёт «${x.n}»?`, opts:Object.entries(RESULTS).map(([id,r])=>({id,html:`${ICON_R[id]}<span>${r.name}</span>`})), ok:rs, explain:`«${x.n}» работает в области «${AREA[x.a].name}», там проверяем: ${RESULTS[AREA[x.a].res].name}`}}
+  if(type==='time'){const ts=[...new Set(x.areas.map(a=>AREA[a].time))];return {kind:'Время', stat:k, text:`${iconKey(k)} В каком времени работает «${x.n}»?`, opts:['Прошлое','Настоящее','Будущее'].map(t=>({id:t,html:`<span>${t}</span>`})), ok:ts, explain:`«${x.n}»: ${x.areas.map(a=>AREA[a].name+' = '+AREA[a].time.toLowerCase()).join(', ')}`}}
+  if(type==='cell'){
+    const cells=Object.keys(CELL).filter(c=>CELL[c].some(z=>K[z].p));
+    const c=pick(cells), [a,m]=c.split('|'), inCell=CELL[c].filter(z=>K[z].p), right=pick(inCell);
+    const opts=shuffle([right,...distract(inCell,PATTERNS,3)]).map(patOpt);
+    return {kind:'Ячейка', stat:right, text:`<span class="tag" style="font-size:16px;padding:8px 14px">${areaDot(a)}${AREA[a].name}</span> + <span class="tag" style="font-size:16px;padding:8px 14px">${ICON_M[m]}${METHOD[m].name}</span> Какой паттерн здесь?`, opts, ok:inCell, explain:`${AREA[a].name} + ${METHOD[m].name}: ${inCell.map(z=>K[z].n).join(', ')}`};
+  }
+  if(type==='icon'){
+    const r=Math.random();
+    if(r<.3){const m=pick(METHODS);return {kind:'Иконка способа', stat:'m:'+m.id, text:'Какой способ обозначает эта иконка?', vis:`<div class="big">${ICON_M[m.id]}</div>`, opts:METHODS.map(z=>({id:z.id,html:`<span>${z.name}</span>`})), ok:[m.id], explain:`Это ${m.name.toLowerCase()}. ${m.text}`}}
+    if(r<.5){const id=pick(Object.keys(RESULTS));return {kind:'Иконка результата', stat:'r:'+id, text:'Какой вопрос обозначает эта иконка?', vis:`<div class="big">${ICON_R[id]}</div>`, opts:Object.entries(RESULTS).map(([z,v])=>({id:z,html:`<span>${v.name}</span>`})), ok:[id], explain:`${RESULTS[id].name} ${RESULTS[id].text}`}}
+    return {kind:'Иконка паттерна', stat:k, text:'Какой паттерн обозначает эта иконка?', vis:`<div class="big">${ICON_P[k]}</div>`, opts:shuffle([k,...distract([k],PATTERNS,3)]).map(z=>({id:z,html:`<span>${K[z].n}</span>`})), ok:[k], explain:`Это «${x.n}». ${structLine(k)}`};
+  }
+  if(type==='desc') return {kind:'Описание', stat:k, text:`<span style="font-size:20px;font-weight:600">${x.d}</span>`, opts:shuffle([k,...distract([k],PATTERNS,3)]).map(patOpt), ok:[k], explain:`Это «${x.n}». ${structLine(k)}`};
+  if(type==='reply'){const bi=rnd(BELIEFS.length);return {kind:'Реплика', stat:k, text:`<span style="font-size:18px;font-weight:600;color:var(--ink2)">«${esc(BELIEFS[bi].b)}»</span><span style="width:100%;font-size:22px">- ${esc(BELIEFS[bi].a[k])}</span>`, opts:shuffle([k,...distract(CELL_SAME(k),PATTERNS,3)]).map(patOpt), ok:[k], explain:`Это «${x.n}». ${structLine(k)}`}}
+}
+function CELL_SAME(k){return [k]}
+function renderBlitzSetup(){
+  const best=store.get('bbest',null);
+  $('#blitz').innerHTML=`<div class="setup">
+    <div class="plate"><div class="btitle" style="margin-bottom:6px">Что тренируем</div><p class="muted small" style="margin-bottom:16px">Вопросы идут вперемешку. Паттерны, в которых ты ошибаешься, попадаются чаще.</p>
+      <div class="checks">${QTYPES.map(q=>`<label class="chk"><input type="checkbox" value="${q.id}" ${Blitz.types.includes(q.id)?'checked':''}>${q.name}</label>`).join('')}</div></div>
+    <div class="plate"><div class="btitle" style="margin-bottom:6px">Длина раунда</div><p class="muted small" style="margin-bottom:16px">Отвечай клавишами <kbd>1</kbd>–<kbd>5</kbd>, дальше <kbd>Enter</kbd>.</p>
+      <div class="seg" id="blen">${[10,20,40].map(n=>`<button class="${Blitz.len===n?'on':''}" data-n="${n}">${n} вопросов</button>`).join('')}</div>
+      ${best?`<p class="small muted" style="margin-top:18px">Лучший раунд: <b style="color:var(--ink)">${best.p}%</b> при среднем времени ${best.t.toFixed(1)} с на вопрос</p>`:''}
+      <button class="btn pri" id="bstart" style="margin-top:20px;width:100%">Начать раунд</button></div></div>`;
+  $$('#blen button').forEach(b=>b.onclick=()=>{Blitz.len=+b.dataset.n;renderBlitzSetup()});
+  $('#bstart').onclick=()=>{
+    Blitz.types=$$('#blitz .chk input:checked').map(i=>i.value); if(!Blitz.types.length){toast('Отметь хотя бы один тип вопросов');return}
+    store.set('btypes',Blitz.types);
+    Blitz.qs=Array.from({length:Blitz.len},()=>genQ(pick(Blitz.types)));Blitz.i=0;Blitz.score=0;Blitz.times=[];Blitz.mistakes=[];renderBlitzQ();
+  };
+}
+function renderBlitzQ(){
+  const q=Blitz.qs[Blitz.i]; Blitz.answered=false; Blitz.picked=new Set(); Blitz.t0=performance.now();
+  $('#blitz').innerHTML=`<div class="qcard">
+    <div class="qtop"><span class="qmeta">${Blitz.i+1} / ${Blitz.qs.length}</span><div class="bar"><i style="width:${Blitz.i/Blitz.qs.length*100}%"></i></div><span class="qmeta" id="bclock">0.0 с</span><span class="qmeta">Верно: ${Blitz.score}</span></div>
+    <div class="qbox"><div class="qkind">${q.kind}</div><div class="qtext">${q.text}</div>${q.vis?`<div class="qvis">${q.vis}</div>`:''}
+      <div class="opts">${q.opts.map((o,i)=>`<button class="opt" data-id="${o.id}">${o.html}<span class="k">${i+1}</span></button>`).join('')}</div>
+      <div class="fb" id="bfb"></div>
+      <div class="qfoot"><button class="btn ghost sm" id="bquit">Закончить раунд</button><div class="row">${q.multi?'<button class="btn sec" id="bcheck">Ответить</button>':''}<button class="btn pri" id="bnext" style="display:none">Дальше <kbd style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)">Enter</kbd></button></div></div>
+    </div></div>`;
+  clearInterval(Blitz.timer); Blitz.timer=setInterval(()=>{const el=$('#bclock');if(el&&!Blitz.answered)el.textContent=((performance.now()-Blitz.t0)/1000).toFixed(1)+' с'},100);
+  $$('#blitz .opt').forEach(b=>b.onclick=()=>blitzPick(b.dataset.id));
+  if(q.multi) $('#bcheck').onclick=blitzAnswer;
+  $('#bnext').onclick=blitzNext; $('#bquit').onclick=blitzEnd;
+}
+function blitzPick(id){
+  const q=Blitz.qs[Blitz.i]; if(Blitz.answered) return;
+  if(q.multi){Blitz.picked.has(id)?Blitz.picked.delete(id):Blitz.picked.add(id);$$('#blitz .opt').forEach(b=>b.classList.toggle('pick',Blitz.picked.has(b.dataset.id)));return}
+  Blitz.picked=new Set([id]); blitzAnswer();
+}
+function blitzAnswer(){
+  const q=Blitz.qs[Blitz.i]; if(Blitz.answered||!Blitz.picked.size) return; Blitz.answered=true;
+  const dt=(performance.now()-Blitz.t0)/1000; Blitz.times.push(dt);
+  let ok; if(q.multi){ok=Blitz.picked.size===q.ok.length&&[...Blitz.picked].every(p=>q.ok.includes(p))}else{ok=q.ok.includes([...Blitz.picked][0])}
+  $$('#blitz .opt').forEach(b=>{const id=b.dataset.id;if(q.ok.includes(id))b.classList.add('ok');else if(Blitz.picked.has(id))b.classList.add('bad');else b.classList.add('dim')});
+  if(ok)Blitz.score++;else Blitz.mistakes.push(q);
+  Stats.rec(q.stat,ok);
+  const fb=$('#bfb'); fb.className='fb on '+(ok?'ok':'bad'); fb.innerHTML=`<b>${ok?'Верно.':'Мимо.'}</b> ${q.explain}`;
+  const c=$('#bcheck'); if(c)c.style.display='none';
+  $('#bnext').style.display='inline-flex';
+  if(ok) Blitz._auto=setTimeout(()=>{if(Blitz.answered&&Blitz.qs[Blitz.i]===q)blitzNext()},1100);
+}
+function blitzNext(){clearTimeout(Blitz._auto);if(!Blitz.answered)return;Blitz.i++;if(Blitz.i>=Blitz.qs.length)blitzEnd();else renderBlitzQ()}
+function blitzEnd(){
+  clearInterval(Blitz.timer); clearTimeout(Blitz._auto);
+  const n=Blitz.times.length; if(!n){renderBlitzSetup();return}
+  const p=Math.round(Blitz.score/n*100), t=Blitz.times.reduce((a,b)=>a+b,0)/n;
+  const best=store.get('bbest',null); let rec=false;
+  if(n>=10&&(!best||p>best.p||(p===best.p&&t<best.t))){store.set('bbest',{p,t});rec=true}
+  $('#blitz').innerHTML=`<div class="qcard"><div class="qbox">
+    <div class="qkind">Раунд окончен</div><div class="qtext">${p>=90?'Схема держится крепко.':p>=70?'Хороший результат. Ошибки ниже.':'Есть над чем поработать. Разбери ошибки и пройди ещё раз.'}${rec?' <span class="tag" style="background:var(--okbg);color:var(--ok)">новый рекорд</span>':''}</div>
+    <div class="res"><div><b>${Blitz.score}/${n}</b><span>верных ответов</span></div><div><b>${p}%</b><span>точность</span></div><div><b>${t.toFixed(1)} с</b><span>в среднем на вопрос</span></div></div>
+    ${Blitz.mistakes.length?`<div class="btitle" style="font-size:18px;margin-bottom:10px">Ошибки</div><div class="mlist">${Blitz.mistakes.map(q=>`<div>${q.explain}</div>`).join('')}</div>`:''}
+    <div class="row" style="margin-top:22px"><button class="btn pri" id="bagain">Ещё раунд</button><button class="btn sec" id="bset">Настройки</button></div></div></div>`;
+  $('#bagain').onclick=()=>{Blitz.qs=Array.from({length:Blitz.len},()=>genQ(pick(Blitz.types)));Blitz.i=0;Blitz.score=0;Blitz.times=[];Blitz.mistakes=[];renderBlitzQ()};
+  $('#bset').onclick=renderBlitzSetup;
+}
+/* ---------- 3. СОБЕРИ СХЕМУ ---------- */
+const Build = {mode:'areas', place:{}, sel:null, checked:false, t0:null, tick:null};
+function buildReset(){Build.place={};PATTERNS.forEach(k=>Build.place[k]=null);Build.sel=null;Build.checked=false;Build.t0=null;clearInterval(Build.tick);Build.order=shuffle(PATTERNS)}
+function zoneOk(k,z){if(Build.mode==='areas')return K[k].areas.includes(z);return K[k].cells.includes(z)}
+function chipHTML(k){const st=Build.checked&&Build.place[k]!==null?(zoneOk(k,Build.place[k])?'ok':'bad'):'';return `<button class="chip ${Build.sel===k?'sel':''} ${st}" draggable="true" data-k="${k}">${Build.mode==='areas'?methodIcons(k):''}${ICON_P[k]}<span>${K[k].n}</span></button>`}
+function renderBuild(){
+  const pool=Build.order.filter(k=>Build.place[k]===null);
+  const best=store.get('buildbest_'+Build.mode,null);
+  let board='';
+  if(Build.mode==='areas'){
+    board=`<div class="zones">${AREAS.map(a=>`<div class="zone" data-z="${a.id}" style="border-top:5px solid ${a.color}"><div class="zh">${areaDot(a.id)}${a.name}<small>${a.time}</small></div>${PATTERNS.filter(k=>Build.place[k]===a.id).map(chipHTML).join('')}</div>`).join('')}</div>`;
+  } else {
+    board=`<div class="bmx"><div></div>${AREAS.map(a=>`<div class="hd" style="padding:8px;font-weight:700;font-size:14px;display:flex;gap:8px;align-items:center;background:${a.soft};border-radius:10px">${areaDot(a.id)}${a.name}</div>`).join('')}`;
+    METHODS.forEach(m=>{board+=`<div class="rh" style="padding:8px;font-weight:600;font-size:13px;display:flex;gap:6px;align-items:center;background:var(--plate);border-radius:10px">${ICON_M[m.id]}${m.name}</div>`;AREAS.forEach(a=>{const z=a.id+'|'+m.id;board+=`<div class="zone" data-z="${z}">${PATTERNS.filter(k=>Build.place[k]===z).map(chipHTML).join('')}</div>`})});
+    board+='</div>';
+  }
+  const placed=PATTERNS.filter(k=>Build.place[k]!==null).length;
+  $('#build').innerHTML=`
+    <div class="bhead"><div class="seg" id="bmode"><button class="${Build.mode==='areas'?'on':''}" data-m="areas">Уровень 1: области</button><button class="${Build.mode==='matrix'?'on':''}" data-m="matrix">Уровень 2: матрица 5×4</button></div>
+      <div class="progress-line">Разложено ${placed} из ${PATTERNS.length}<div class="bar" style="width:160px"><i style="width:${placed/PATTERNS.length*100}%"></i></div><span id="btime">${Build.t0?fmtTime((Date.now()-Build.t0)/1000):'0:00'}</span>${best!==null?`<span class="muted">· рекорд ${fmtTime(best)}</span>`:''}</div></div>
+    <p class="hint" style="margin-bottom:12px">${Build.mode==='areas'?'Перетащи паттерн в его область или нажми на паттерн, потом на область. Стратегия реальности засчитывается и в причинах, и в убеждении.':'Положи каждый паттерн в ячейку «область × способ». Размер фрейма живёт в двух ячейках, последствия в трёх: подходит любая.'}</p>
+    <div class="pool" data-z="pool">${pool.length?pool.map(chipHTML).join(''):'<span class="muted small" style="padding:8px">Все паттерны на местах. Жми «Проверить».</span>'}</div>
+    ${board}
+    <div class="row" style="margin-top:18px"><button class="btn pri" id="bcheck2" ${placed?'':'disabled'}>Проверить</button><button class="btn sec" id="bshow">Показать ответ</button><button class="btn ghost" id="breset">Заново</button><span id="bres" class="small" style="font-weight:600"></span></div>`;
+  $$('#bmode button').forEach(b=>b.onclick=()=>{Build.mode=b.dataset.m;buildReset();renderBuild()});
+  $$('#build .chip').forEach(c=>{
+    c.onclick=e=>{e.stopPropagation();const k=c.dataset.k;if(Build.sel&&Build.sel!==k&&Build.place[k]!==null){buildPut(Build.sel,Build.place[k]);return}if(Build.place[k]!==null&&Build.sel===null){Build.place[k]=null;Build.checked=false;renderBuild();return}Build.sel=Build.sel===k?null:k;renderBuild()};
+    c.ondragstart=e=>{e.dataTransfer.setData('text/plain',c.dataset.k);Build.sel=c.dataset.k};
+  });
+  $$('#build [data-z]').forEach(z=>{
+    z.onclick=()=>{if(Build.sel){buildPut(Build.sel,z.dataset.z)}};
+    z.ondragover=e=>{e.preventDefault();z.classList.add('hot')};
+    z.ondragleave=()=>z.classList.remove('hot');
+    z.ondrop=e=>{e.preventDefault();z.classList.remove('hot');buildPut(e.dataTransfer.getData('text/plain'),z.dataset.z)};
+  });
+  $('#bcheck2').onclick=buildCheck;
+  $('#bshow').onclick=()=>{PATTERNS.forEach(k=>Build.place[k]=Build.mode==='areas'?K[k].a:K[k].cells[0]);Build.checked=true;Build.t0=null;clearInterval(Build.tick);renderBuild();$('#bres').textContent='Это правильная раскладка. Запомни её и нажми «Заново».'};
+  $('#breset').onclick=()=>{buildReset();renderBuild()};
+}
+function buildPut(k,z){
+  if(!k)return; if(!Build.t0){Build.t0=Date.now();Build.tick=setInterval(()=>{const el=$('#btime');if(el&&Build.t0)el.textContent=fmtTime((Date.now()-Build.t0)/1000)},500)}
+  Build.place[k]=z==='pool'?null:z; Build.sel=null; Build.checked=false; renderBuild();
+}
+function buildCheck(){
+  Build.checked=true; const placed=PATTERNS.filter(k=>Build.place[k]!==null); const good=placed.filter(k=>zoneOk(k,Build.place[k]));
+  placed.forEach(k=>Stats.rec(k,zoneOk(k,Build.place[k])));
+  const all=good.length===PATTERNS.length; let msg;
+  if(all&&!Build.t0){msg='Всё верно.'}else if(all){const t=(Date.now()-Build.t0)/1000;clearInterval(Build.tick);const key='buildbest_'+Build.mode;const best=store.get(key,null);if(best===null||t<best){store.set(key,t);msg=`Всё верно за ${fmtTime(t)}. Новый рекорд!`}else msg=`Всё верно за ${fmtTime(t)}. Рекорд: ${fmtTime(best)}.`;Build.t0=null}
+  else msg=`Верно ${good.length} из ${PATTERNS.length}. Красные верни в пул кликом и попробуй снова.`;
+  renderBuild(); $('#bres').textContent=msg; $('#bres').style.color=all?'var(--ok)':'var(--bad)';
+}
+
+/* ---------- 4. УГАДАЙ ФОКУС ---------- */
+const Guess = {mode:'pattern', cur:null, done:false, n:0, ok:0, streak:0, sa:null, sm:null};
+function guessNew(){const keys=Guess.mode==='pattern'?PATTERNS:ALLKEYS;Guess.cur={k:wpick(keys),bi:rnd(BELIEFS.length)};Guess.done=false;Guess.sa=null;Guess.sm=null;renderGuess()}
+function renderGuess(){
+  const {k,bi}=Guess.cur, b=BELIEFS[bi];
+  let opts='';
+  if(Guess.mode==='pattern') opts=`<div class="popts">${SPIN_ORDER.map((p,i)=>`<button class="opt" data-k="${p}">${iconKey(p)}<span>${K[p].n}</span></button>`).join('')}</div>`;
+  else opts=`<div class="sopts"><div><div class="lbl">Область</div><div class="opts" id="ga">${AREAS.map(a=>`<button class="opt ${Guess.sa===a.id?'pick':''}" data-a="${a.id}">${areaDot(a.id)}<span>${a.name}</span></button>`).join('')}</div></div>
+    <div><div class="lbl">Способ</div><div class="opts m4" id="gm">${METHODS.map(m=>`<button class="opt ${Guess.sm===m.id?'pick':''}" data-m="${m.id}">${ICON_M[m.id]}<span>${m.name}</span></button>`).join('')}</div></div></div>`;
+  $('#guess').innerHTML=`
+    <div class="bhead"><div class="seg" id="gmode"><button class="${Guess.mode==='pattern'?'on':''}" data-m="pattern">Назови паттерн</button><button class="${Guess.mode==='struct'?'on':''}" data-m="struct">Назови область и способ</button></div>
+      <div class="progress-line">Ответов: ${Guess.n} · верно: ${Guess.ok}${Guess.n?` (${Math.round(Guess.ok/Guess.n*100)}%)`:''} · серия: ${Guess.streak}</div></div>
+    <div class="gcard"><span class="gbel">${esc(b.b)}</span><div class="grep">- ${esc(b.a[k])}</div>${opts}
+      <div class="fb" id="gfb"></div>
+      <div class="qfoot"><span class="small muted">${Guess.mode==='struct'?'В этом режиме попадаются и ходы без названия у Дилтса.':'Подумай, прежде чем кликать: какая область и какой способ?'}</span><div class="row">${Guess.mode==='struct'?'<button class="btn sec" id="gcheck">Проверить</button>':''}<button class="btn pri" id="gnext" style="display:none">Дальше</button><button class="btn ghost sm" id="gskip">Пропустить</button></div></div></div>`;
+  $$('#gmode button').forEach(x=>x.onclick=()=>{Guess.mode=x.dataset.m;guessNew()});
+  $('#gskip').onclick=guessNew; $('#gnext').onclick=guessNew;
+  if(Guess.mode==='pattern') $$('#guess .popts .opt').forEach(x=>x.onclick=()=>guessAnswer(x.dataset.k));
+  else{
+    $$('#ga .opt').forEach(x=>x.onclick=()=>{if(Guess.done)return;Guess.sa=x.dataset.a;$$('#ga .opt').forEach(y=>y.classList.toggle('pick',y===x))});
+    $$('#gm .opt').forEach(x=>x.onclick=()=>{if(Guess.done)return;Guess.sm=x.dataset.m;$$('#gm .opt').forEach(y=>y.classList.toggle('pick',y===x))});
+    $('#gcheck').onclick=()=>{if(!Guess.sa||!Guess.sm){toast('Выбери и область, и способ');return}guessAnswer(null)};
+  }
+}
+function guessAnswer(p){
+  if(Guess.done)return; Guess.done=true; const {k}=Guess.cur, x=K[k]; let ok;
+  if(Guess.mode==='pattern'){
+    ok=p===k;
+    $$('#guess .popts .opt').forEach(b=>{if(b.dataset.k===k)b.classList.add('ok');else if(b.dataset.k===p)b.classList.add('bad');else b.classList.add('dim')});
+  } else {
+    const okA=x.areas.includes(Guess.sa), okM=x.m.includes(Guess.sm); ok=okA&&okM&&x.cells.includes(Guess.sa+'|'+Guess.sm);
+    $$('#ga .opt').forEach(b=>{if(x.areas.includes(b.dataset.a))b.classList.add('ok');else if(b.dataset.a===Guess.sa)b.classList.add('bad');else b.classList.add('dim')});
+    $$('#gm .opt').forEach(b=>{if(x.m.includes(b.dataset.m))b.classList.add('ok');else if(b.dataset.m===Guess.sm)b.classList.add('bad');else b.classList.add('dim')});
+    $('#gcheck').style.display='none';
+  }
+  Guess.n++; if(ok){Guess.ok++;Guess.streak++}else Guess.streak=0; Stats.rec(k,ok);
+  const fb=$('#gfb'); fb.className='fb on '+(ok?'ok':'bad');
+  fb.innerHTML=`<b>${ok?'Верно.':'Мимо.'}</b> Это «${x.n}»: ${structLine(k)}. <span class="muted">${x.d}</span>`;
+  $('#gnext').style.display='inline-flex'; $('#gskip').style.display='none';
+}
+/* ---------- 5. РАСКРУТКА ---------- */
+const Spin = {bi:0, custom:'', mode:'patterns', one:null, oneN:0, oneOk:0};
+const drafts = store.get('drafts',{});
+const dkey = k=>(Spin.bi<0?'c:'+Spin.custom:Spin.bi)+'|'+k;
+function saveDraft(k,v){drafts[dkey(k)]=v;store.set('drafts',drafts)}
+function answerHTML(keys){
+  if(Spin.bi<0) return `<div class="al">Шаблон</div>${keys.map(k=>`<p>${esc(K[k].t)}</p>`).join('')}<p class="small muted" style="margin-top:6px">Для своего убеждения готовых вариантов нет. Сверься с шаблоном и описанием.</p>`;
+  const b=BELIEFS[Spin.bi];
+  return `<div class="al">Мой вариант</div>${keys.map(k=>`<p>${keys.length>1?`<b>${K[k].n}:</b> `:''}- ${esc(b.a[k])}</p>`).join('')}`;
+}
+function curBelief(){return Spin.bi<0?Spin.custom:BELIEFS[Spin.bi].b}
+function renderSpin(){
+  const sel=`<select id="sbel">${BELIEFS.map((b,i)=>`<option value="${i}" ${i===Spin.bi?'selected':''}>${esc(b.b)}</option>`).join('')}<option value="-1" ${Spin.bi<0?'selected':''}>Своё убеждение…</option></select>`;
+  $('#spin').innerHTML=`
+    <div class="spinhead"><div class="bsel">${sel}${Spin.bi<0?`<input id="scustom" placeholder="Например: Я всегда опаздываю" value="${esc(Spin.custom)}">`:''}<button class="btn sec" id="srand">Случайное</button></div>
+      <div class="seg" id="smode"><button class="${Spin.mode==='patterns'?'on':''}" data-m="patterns">14 паттернов</button><button class="${Spin.mode==='matrix'?'on':''}" data-m="matrix">Матрица 5×4</button><button class="${Spin.mode==='one'?'on':''}" data-m="one">По одному</button></div></div>
+    <div id="sbody"></div>`;
+  $('#sbel').onchange=e=>{Spin.bi=+e.target.value;renderSpin()};
+  $('#srand').onclick=()=>{let n;do{n=rnd(BELIEFS.length)}while(n===Spin.bi&&BELIEFS.length>1);Spin.bi=n;Spin.one=null;renderSpin()};
+  if($('#scustom')){const i=$('#scustom');i.onchange=()=>{Spin.custom=i.value.trim();renderSpinBody()};if(!Spin.custom)setTimeout(()=>i.focus(),50)}
+  $$('#smode button').forEach(b=>b.onclick=()=>{Spin.mode=b.dataset.m;Spin.one=null;renderSpin()});
+  renderSpinBody();
+}
+function bindTasks(root){
+  $$('textarea[data-k]',root).forEach(t=>t.oninput=()=>{saveDraft(t.dataset.k,t.value);updateFill()});
+  $$('[data-show]',root).forEach(b=>b.onclick=()=>{const a=$('#ans-'+b.dataset.show);a.classList.toggle('on');b.textContent=a.classList.contains('on')?'Скрыть':'Мой вариант'});
+}
+function updateFill(){const el=$('#sfill');if(!el)return;const keys=Spin.mode==='patterns'?SPIN_ORDER:Object.values(CELL_MAIN);const n=keys.filter(k=>(drafts[dkey(k)]||'').trim()).length;el.innerHTML=`Заполнено ${n} из ${keys.length}<div class="bar" style="width:160px"><i style="width:${n/keys.length*100}%"></i></div>`}
+function renderSpinBody(){
+  const body=$('#sbody'); const belief=curBelief();
+  if(Spin.bi<0&&!belief){body.innerHTML=`<div class="plate" style="margin-top:22px"><p class="muted">Впиши своё убеждение в поле выше и нажми Enter. Готовых вариантов для него не будет, зато останутся шаблоны и описания каждого хода.</p></div>`;return}
+  const head=`<div class="bigbel"><span class="gbel">${esc(belief)}</span>${Spin.mode!=='one'?`<span class="progress-line" id="sfill"></span>`:''}</div>`;
+  if(Spin.mode==='patterns'){
+    let h=head+`<div class="row" style="margin-top:10px"><button class="btn ghost sm" id="sall">Показать все мои варианты</button><button class="btn ghost sm" id="sclear">Очистить мои ответы</button></div>`;
+    AREAS.forEach(a=>{
+      const keys=SPIN_ORDER.filter(k=>K[k].a===a.id); if(!keys.length)return;
+      h+=`<div class="agroup"><div class="agh">${areaDot(a.id)}<span class="an">${a.name}</span><span class="tag">${a.time}</span><span class="tag">${ICON_R[a.res]}${RESULTS[a.res].name}</span></div><div class="tasks">${keys.map(k=>`
+        <div class="task" style="--c:${a.color}"><div class="th">${ICON_P[k]}<b>${K[k].n}</b><span class="mi">${methodIcons(k)}</span></div>
+        <div class="tp">${esc(K[k].t)}</div>
+        <textarea data-k="${k}" placeholder="Твой фокус…">${esc(drafts[dkey(k)]||'')}</textarea>
+        <div class="row"><button class="btn sec sm" data-show="${k}">Мой вариант</button></div>
+        <div class="ans" id="ans-${k}">${answerHTML([k])}</div></div>`).join('')}</div></div>`;
+    });
+    body.innerHTML=h; bindTasks(body); updateFill();
+    $('#sall').onclick=()=>{const on=!$$('#sbody .ans').every(a=>a.classList.contains('on'));$$('#sbody .ans').forEach(a=>a.classList.toggle('on',on));$$('#sbody [data-show]').forEach(b=>b.textContent=on?'Скрыть':'Мой вариант')};
+    $('#sclear').onclick=()=>{SPIN_ORDER.forEach(k=>delete drafts[dkey(k)]);store.set('drafts',drafts);renderSpinBody()};
+  } else if(Spin.mode==='matrix'){
+    let h=head+`<p class="hint" style="margin-top:6px">Двадцать ячеек: пять областей на четыре способа. Заполни как можно больше, потом открывай варианты.</p><div class="smx"><div></div>${AREAS.map(a=>`<div class="hd" style="padding:8px;font-weight:700;font-size:14px;display:flex;gap:8px;align-items:center;background:${a.soft};border-radius:10px">${areaDot(a.id)}${a.name}</div>`).join('')}`;
+    METHODS.forEach(m=>{h+=`<div class="rh" style="padding:8px;font-weight:600;font-size:13px;display:flex;gap:6px;align-items:center;background:var(--plate);border-radius:10px">${ICON_M[m.id]}${m.name}</div>`;
+      AREAS.forEach(a=>{const c=a.id+'|'+m.id, main=CELL_MAIN[c], ks=CELL[c];
+        h+=`<div class="cl"><div class="cn">${ks.filter(k=>K[k].p).map(k=>ICON_P[k]).join('')||''}<span>${ks.filter(k=>K[k].p).map(k=>K[k].n).join(', ')||'<span class="muted">без названия</span>'}</span></div>
+        <textarea data-k="${main}" placeholder="${esc(K[main].t)}">${esc(drafts[dkey(main)]||'')}</textarea>
+        <button class="btn sec sm" data-show="${main}" style="height:30px">Мой вариант</button><div class="ans" id="ans-${main}">${answerHTML(ks)}</div></div>`})});
+    body.innerHTML=h+'</div>'; bindTasks(body); updateFill();
+  } else renderOne();
+}
+function renderOne(){
+  if(!Spin.one){const k=wpick(ALLKEYS);Spin.one={k};}
+  const k=Spin.one.k, x=K[k], a=AREA[x.a];
+  $('#sbody').innerHTML=`<div class="one" style="margin-top:22px">
+    <div class="qtop"><span class="qmeta">Заданий: ${Spin.oneN} · засчитано: ${Spin.oneOk}</span></div>
+    <div class="qbox">
+      <span class="gbel">${esc(curBelief())}</span>
+      <div class="qkind" style="margin-top:22px">Задание</div>
+      <div class="qtext">${iconKey(k)}${x.p?x.n:`<span>${a.name} + ${x.m.map(m=>METHOD[m].name).join(' + ')}</span>`}</div>
+      <div class="row" style="gap:6px;margin-top:12px">${keyTags(k)}</div>
+      <p class="small muted" style="margin-top:12px">${x.d}</p>
+      <textarea id="onet" style="margin-top:16px;min-height:96px" placeholder="${esc(x.t)}"></textarea>
+      <div class="ans" id="ans-one" style="margin-top:12px">${answerHTML([k])}</div>
+      <div class="qfoot"><button class="btn sec" id="oshow">Мой вариант</button><div class="row" id="orate" style="display:none"><span class="small muted">Твой ответ попал в паттерн?</span><button class="btn sec" data-r="0">Нет</button><button class="btn pri" data-r="1">Да, засчитать</button></div><button class="btn ghost sm" id="oskip">Другое задание</button></div>
+    </div></div>`;
+  setTimeout(()=>$('#onet').focus(),50);
+  $('#oshow').onclick=()=>{$('#ans-one').classList.add('on');$('#oshow').style.display='none';$('#orate').style.display='flex'};
+  $('#oskip').onclick=()=>{Spin.one=null;if(Spin.bi>=0&&Math.random()<.5)Spin.bi=rnd(BELIEFS.length);renderSpin()};
+  $$('#orate [data-r]').forEach(b=>b.onclick=()=>{const ok=b.dataset.r==='1';Spin.oneN++;if(ok)Spin.oneOk++;Stats.rec(k,ok);Spin.one=null;if(Spin.bi>=0&&Math.random()<.5)Spin.bi=rnd(BELIEFS.length);renderSpin()});
+}
+
+/* ---------- 6. СПРАВОЧНИК ---------- */
+function renderRef(){
+  const res=Object.entries(RESULTS).map(([id,r])=>`<div class="plate mini">${ICON_R[id]}<h4>${r.name}</h4><p>${r.text}</p><p style="margin-top:8px" class="small"><b style="color:var(--ink)">Области:</b> ${AREAS.filter(a=>a.res===id).map(a=>a.name).join(', ')}</p></div>`).join('');
+  const met=METHODS.map(m=>`<div class="plate mini">${ICON_M[m.id]}<h4>${m.name}</h4><p>${m.text}</p><p style="margin-top:8px" class="small"><b style="color:var(--ink)">Паттерны:</b> ${PATTERNS.filter(k=>K[k].m.includes(m.id)).map(k=>K[k].n).join(', ')}</p></div>`).join('');
+  const ar=AREAS.map(a=>`<div class="plate mini" style="border-top:5px solid ${a.color}"><h4>${areaDot(a.id)}${a.name}</h4><p>${a.ask}</p><p style="margin-top:8px" class="small"><b style="color:var(--ink)">${a.time}.</b> ${RESULTS[a.res].name}</p></div>`).join('');
+  const pats=SPIN_ORDER.concat(ALLKEYS.filter(k=>!K[k].p)).map(k=>{const x=K[k];return `<div class="refc"><h4>${iconKey(k)}${x.n}${x.p?'':' <span class="tag">ход по структуре</span>'}</h4><div class="meta">${keyTags(k)}</div><p class="small">${x.d}</p><div class="tpl">${esc(x.t)}</div><div class="exa"><span class="muted">«${esc(BELIEFS[0].b)}»</span><br>- ${esc(BELIEFS[0].a[k])}</div></div>`}).join('');
+  $('#ref').innerHTML=`
+    <div class="block"><div class="bhead"><div><div class="btitle">3 результата воздействия</div><div class="bsub">Чтобы сдвинуть убеждение, показываем одно из трёх.</div></div></div><div class="cols3">${res}</div></div>
+    <div class="block"><div class="bhead"><div><div class="btitle">4 способа воздействия</div><div class="bsub">Это способы мышления. Каждый паттерн собран из одного или нескольких.</div></div></div><div class="cols4">${met}</div></div>
+    <div class="block"><div class="bhead"><div><div class="btitle">5 областей воздействия</div><div class="bsub">Модель SCORE, разложенная на линии времени.</div></div></div><div class="cols5">${ar}</div></div>
+    <div class="block"><div class="bhead"><div><div class="btitle">Фокусы и метапрограммы</div><div class="bsub">Подбирай паттерн под то, как человек думает.</div></div></div>
+      <div class="refgrid">
+        <div class="refc"><h4>Ориентация во времени</h4><p class="small"><b>Прошлое:</b> стратегия реальности, противоположный пример.<br><b>Настоящее:</b> разделение, изменение размера фрейма, противоположный пример, намерение, стратегия реальности.<br><b>Будущее:</b> последствия, иерархия критериев, другой результат.</p></div>
+        <div class="refc"><h4>Мотивация к / от</h4><p class="small"><b>К:</b> другой результат, иерархия критериев.<br><b>От:</b> последствия.</p></div>
+        <div class="refc"><h4>Фокус сравнения</h4><p class="small"><b>Различия:</b> противоположный пример.<br><b>Сходство:</b> аналогия, переопределение.</p></div>
+        <div class="refc"><h4>Референция</h4><p class="small"><b>Внутренняя:</b> предложи человеку самому сделать выбор.<br><b>Внешняя:</b> модель мира. Для одних работает конкретный авторитет, для других большинство или принцип.</p></div>
+      </div></div>
+    <div class="block"><div class="bhead"><div><div class="btitle">Все ходы с примерами</div><div class="bsub">14 паттернов Дилтса и 8 ходов по структуре, которые закрывают пустые ячейки матрицы.</div></div></div><div class="refgrid">${pats}</div></div>`;
+}
+
+/* ---------- старт ---------- */
+function init(){
+  $('nav').innerHTML=PAGES.map(([id,n])=>`<button data-go="${id}">${n}</button>`).join('');
+  $$('nav button').forEach(b=>b.onclick=()=>go(b.dataset.go));
+  $$('[data-jump]').forEach(b=>b.onclick=()=>go(b.dataset.jump));
+  $('#logo-ico').innerHTML=ICON_M.meta;
+  $('#trio').innerHTML=`
+    <div class="tri"><div class="num" style="color:#C40000">3</div><div><h3>результата</h3><ul>${Object.entries(RESULTS).map(([id,r])=>`<li>${ICON_R[id]}${r.name}</li>`).join('')}</ul></div></div>
+    <div class="tri"><div class="num" style="color:#0A8A0A">4</div><div><h3>способа</h3><ul>${METHODS.map(m=>`<li>${ICON_M[m.id]}${m.name}</li>`).join('')}</ul></div></div>
+    <div class="tri"><div class="num" style="color:#0C7E7E">5</div><div><h3>областей</h3><ul>${AREAS.map(a=>`<li>${areaDot(a.id)}${a.name}</li>`).join('')}</ul></div></div>`;
+  renderMap(); renderMatrix();
+  $$('#mxmode button').forEach(b=>b.onclick=()=>{MapS.mxHide=b.dataset.v==='1';$$('#mxmode button').forEach(x=>x.classList.toggle('on',x===b));renderMatrix()});
+  $('#resetstats').onclick=()=>{if(confirm('Сбросить всю статистику?')){Stats.d={};store.set('stats',{});store.set('today',{day:'',ok:0,all:0});renderWeak();renderHeaderStat();toast('Статистика сброшена')}};
+  renderBlitzSetup(); buildReset(); renderBuild(); guessNew(); renderSpin(); renderRef(); renderHeaderStat();
+  document.addEventListener('keydown',e=>{
+    if(!$('#p-blitz').classList.contains('on')||e.target.matches('textarea,input,select'))return;
+    const q=Blitz.qs[Blitz.i]; if(!$('#blitz .opt'))return;
+    if(/^[1-9]$/.test(e.key)){const b=$$('#blitz .opt')[+e.key-1];if(b)b.click()}
+    if(e.key==='Enter'){if(Blitz.answered)blitzNext();else if(q&&q.multi)blitzAnswer()}
+  });
+  const h=location.hash.slice(1); go(PAGES.some(p=>p[0]===h)?h:'map');
+}
+init();
+</script></body></html>
